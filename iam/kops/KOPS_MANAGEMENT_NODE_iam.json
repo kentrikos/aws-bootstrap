@@ -28,7 +28,8 @@
                 "iam:GetInstanceProfile",
                 "iam:AddRoleToInstanceProfile",
                 "iam:ListInstanceProfilesForRole",
-                "iam:RemoveRoleFromInstanceProfile"
+                "iam:RemoveRoleFromInstanceProfile",
+                "iam:ListPolicyVersions"
             ],
             "NotResource":[
             "arn:aws:iam::*:role/ccc-administration/*",
