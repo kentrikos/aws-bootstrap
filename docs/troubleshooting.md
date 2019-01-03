@@ -42,6 +42,6 @@ Other problems:
 
 When requesting help, please prepare/provide the following information:
 
-* AWS account numbers used
+* AWS account numbers used and names of corresponding management roles
 * copy of your configuration repository (e.g. tarball/gzip/URL)
 * full outputs from commands/Jenkins jobs run
