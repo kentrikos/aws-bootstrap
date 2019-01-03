@@ -19,6 +19,9 @@ Most common problems fall into 4 categories:
 * to investigate connectivity on cluster instances ssh to private IPs (can be found in AWS console), username is `admin`, key can be found in `.ssh/` directory on Jenkins.
   Then test with `wget`, `docker ps` (there should be K8s services running) and also `docker run hello-world`
 * debugging K8s deployment on application is trickier as jobs are run in pods from jx (try `kubectl -n jx exec -it JENKINS_POD_NAME -- /bin/bash` from core-infra Jenkins)
+* ensure public DNS resolution works on "application" account (e.g. launch EC2 instance and make simple test such as `host github.com`)
+* similarly, ensure Internet connectivity on "operations" account (public DNS resolution is not required since HTTP proxy is used)
+* check connectivity between your target VPCs in both accounts (e.g. run `ping` between 2 EC2 instances)
 
 4. Re-deploying over existing resources:
 * ensure your old deployments are completely removed (consult `decommissioning.md`)
