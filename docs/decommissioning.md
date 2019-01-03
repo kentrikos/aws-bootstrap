@@ -39,7 +39,7 @@ In case you clean-up incomplete deployment please skip irrelevant steps.
 * use AWS console/CloudFormation
 
 
-## TROUBLSHOOTING:
+## TROUBLESHOOTING:
 
 1. Problem with state lock for Terraform resources:
 
