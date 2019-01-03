@@ -454,6 +454,7 @@ Resources:
               - iam:DeletePolicy
               - iam:CreatePolicyVersion
               - iam:DeletePolicyVersion
+              - iam:ListPolicyVersions
             Resource: "*"
 
   IAMManagedPolicyKopsManagementNodeS3:
