@@ -111,7 +111,7 @@ Parameters:
       Description: Full string for IP or DNS name of https_proxy parameter (including http(s):// and optional port)
       Type: String
     NoProxyParam:
-      Description: Full string for IP(s) or DNS name(s) of no_proxy parameter (comma separated list, defaults are recommended at minimum)
+      Description: Full string for IP(s) or DNS name(s) of no_proxy parameter (comma separated list, defaults are recommended at minimum. To enable full automation, you have to add the hostname of the git repository, e.g. git-repo.inc.org)
       Type: String
       Default: 169.254.169.254,elb.amazonaws.com
     GitSSHPrivateKey:
