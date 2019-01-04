@@ -421,7 +421,7 @@ Resources:
               - cloudwatch:DescribeAlarmsForMetric
               - cloudwatch:ListDashboards
               - cloudwatch:DescribeAlarms
-              - cloudwatch:SetAlarmState"
+              - cloudwatch:SetAlarmState
             Resource: "*"
           -
             Sid: CWLogs1
@@ -439,7 +439,7 @@ Resources:
               - logs:DeleteLogStream
               - logs:ListTagsLogGroup
               - logs:TagLogGroup
-              - logs:UntagLogGroup"
+              - logs:UntagLogGroup
             Resource: "*"
           -
             Sid: CWLogs3
@@ -509,7 +509,7 @@ Resources:
               - dynamodb:DeleteItem
               - dynamodb:GetItem
               - dynamodb:DescribeTable
-              - dynamodb:*"
+              - dynamodb:*
             Resource: "*"
 
   IAMManagedPolicyKopsManagementNodeEC2:
@@ -775,13 +775,13 @@ Resources:
             Action:
               - ec2:DeleteRoute
               - ec2:CreateRoute
-              - ec2:DeleteRouteTable"
+              - ec2:DeleteRouteTable
             Resource: "arn:aws:ec2:*:*:route-table/*"
           -
             Sid: VPC3
             Effect: Allow
             Action:
-              - ec2:DeleteInternetGateway"
+              - ec2:DeleteInternetGateway
             Resource: "arn:aws:ec2:*:*:internet-gateway/*"
           -
             Sid: "VPC4"
@@ -807,7 +807,7 @@ Resources:
               - ec2:DeleteNatGateway
               - ec2:ModifyVpcAttribute
               - ec2:DeleteVpc
-              - ec2:CreateSubnet"
+              - ec2:CreateSubnet
             Resource: "*"
 ##############################################################################
 
