@@ -93,6 +93,29 @@
             "NotResource":[
                 "arn:aws:sns:*:*:ccc-*"
             ]  
+        },
+        {
+            "Sid": "ES",
+            "Effect": "Allow",
+            "Action": [
+                "es:CreateElasticsearchDomain",
+                "es:DescribeElasticsearchDomain",
+                "es:AddTags",
+                "es:ListTags"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "KINESIS",
+            "Effect": "Allow",
+            "Action": "kinesis:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "LAMBDA",
+            "Effect": "Allow",
+            "Action": "lambda:*",
+            "Resource": "*"
         }
     ]
 }

@@ -178,7 +178,7 @@ Resources:
               - sts:AssumeRole
       ManagedPolicyArns:
         - !Ref IAMManagedPolicyKopsManagementNodeAutoScalingELB
-        - !Ref IAMManagedPolicyKopsManagementNodeCWCWLogsSSN
+        - !Ref IAMManagedPolicyKopsManagementNodeLMA
         - !Ref IAMManagedPolicyKopsManagementNodeDynamoDB
         - !Ref IAMManagedPolicyKopsManagementNodeEC2
         - !Ref IAMManagedPolicyKopsManagementNodeECR
@@ -203,7 +203,7 @@ Resources:
               - sts:AssumeRole
       ManagedPolicyArns:
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_autoscaling_elb"
-        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_cw_cwlogs_sns"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_lma"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_dynamodb"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_ec2"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_ecr"
@@ -393,11 +393,11 @@ Resources:
               - elasticloadbalancing:*
             Resource: "*"
 
-  IAMManagedPolicyKopsManagementNodeCWCWLogsSSN:
+  IAMManagedPolicyKopsManagementNodeLMA:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_cw_cwlogs_sns"
+      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_lma"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -421,7 +421,7 @@ Resources:
               - cloudwatch:DescribeAlarmsForMetric
               - cloudwatch:ListDashboards
               - cloudwatch:DescribeAlarms
-              - cloudwatch:SetAlarmState"
+              - cloudwatch:SetAlarmState
             Resource: "*"
           -
             Sid: CWLogs1
@@ -439,7 +439,7 @@ Resources:
               - logs:DeleteLogStream
               - logs:ListTagsLogGroup
               - logs:TagLogGroup
-              - logs:UntagLogGroup"
+              - logs:UntagLogGroup
             Resource: "*"
           -
             Sid: CWLogs3
@@ -471,6 +471,26 @@ Resources:
               - sns:ListPlatformApplications
               - sns:GetSMSAttributes
             Resource: "*"
+          -
+            Sid: ES
+            Effect: Allow
+            Action:
+              - es:CreateElasticsearchDomain
+              - es:DescribeElasticsearchDomain
+              - es:AddTags
+              - es:ListTags
+            Resource: "*"
+          -
+            Sid: KINESIS
+            Effect: Allow
+            Action: kinesis:*
+            Resource: "*"
+          -
+            Sid: LAMBDA
+            Effect: Allow
+            Action: lambda:*
+            Resource: "*"
+
 
   IAMManagedPolicyKopsManagementNodeDynamoDB:
     Condition: IsAutoIAMMode
@@ -489,7 +509,7 @@ Resources:
               - dynamodb:DeleteItem
               - dynamodb:GetItem
               - dynamodb:DescribeTable
-              - dynamodb:*"
+              - dynamodb:*
             Resource: "*"
 
   IAMManagedPolicyKopsManagementNodeEC2:
@@ -755,13 +775,13 @@ Resources:
             Action:
               - ec2:DeleteRoute
               - ec2:CreateRoute
-              - ec2:DeleteRouteTable"
+              - ec2:DeleteRouteTable
             Resource: "arn:aws:ec2:*:*:route-table/*"
           -
             Sid: VPC3
             Effect: Allow
             Action:
-              - ec2:DeleteInternetGateway"
+              - ec2:DeleteInternetGateway
             Resource: "arn:aws:ec2:*:*:internet-gateway/*"
           -
             Sid: "VPC4"
@@ -787,7 +807,7 @@ Resources:
               - ec2:DeleteNatGateway
               - ec2:ModifyVpcAttribute
               - ec2:DeleteVpc
-              - ec2:CreateSubnet"
+              - ec2:CreateSubnet
             Resource: "*"
 ##############################################################################
 
