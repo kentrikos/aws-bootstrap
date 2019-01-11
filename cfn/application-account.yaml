@@ -101,7 +101,7 @@ Resources:
         - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_lma'
         - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_dynamodb'
         - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_ec2'
-        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_ecr'
+        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_ecr_route53'
         - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_iam'
         - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_s3'
         - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_vpc'
@@ -385,7 +385,7 @@ Resources:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_ecr"
+      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_ecr_route53"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -411,7 +411,15 @@ Resources:
               - ecr:DeleteRepositoryPolicy
               - ecr:BatchCheckLayerAvailability
               - ecr:GetRepositoryPolicy
+              - ecr:ListTagsForResource
             Resource: "*"
+          -
+            Sid: kopsRoute53
+            Effect: Allow
+            Action:
+              -  route53:GetHostedZone
+            Resource: "*"
+
 
   IAMManagedPolicyKopsManagementNodeIAM:
     Condition: IsAutoIAMMode
