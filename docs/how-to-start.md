@@ -112,8 +112,7 @@ on a pair of AWS accounts (operations and application).
 10. Deploy jx on K8s cluster in operations account (using core-infra Jenkins):
 
 * run "Install_JX" job
-* in "Manually create domain" stage go to AWS console/Route53 and create new record set in your hosted zone: wildcard alias to newly created jx ingress NLB (e.g. `*.pdm.YOUR_DNS_DOMAIN`, for alias target choose correct NLB by examining NLBs in the EC2 console)
-  * FIXME: this step should be simplified/automated
+* note that it will create a DNS entry in Route53 automatically (wildcard alias to be used by all Jenkins-X components)
 
 11. Manually configure jx after it is installed (using URL and credentials for web dashboard from previous step, FIXME: this should be automated):
 

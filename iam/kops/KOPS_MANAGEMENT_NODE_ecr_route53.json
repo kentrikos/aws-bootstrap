@@ -21,7 +21,19 @@
                 "ecr:InitiateLayerUpload",
                 "ecr:DeleteRepositoryPolicy",
                 "ecr:BatchCheckLayerAvailability",
-                "ecr:GetRepositoryPolicy"
+                "ecr:GetRepositoryPolicy",
+                "ecr:ListTagsForResource"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "kopsRoute53",
+            "Effect": "Allow",
+            "Action": [
+                "route53:GetChange",
+                "route53:GetHostedZone",
+                "route53:ChangeResourceRecordSets",
+                "route53:ListHostedZones"
             ],
             "Resource": "*"
         }
