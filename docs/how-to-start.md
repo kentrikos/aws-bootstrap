@@ -29,6 +29,8 @@ on a pair of AWS accounts (operations and application).
     * __private__ SSH key allowing read-only access
 
 6. Route53 private hosted zone for a domain that will be used to access services (e.g. Jenkins-X) via convenient names.
+    * currently, only zones maintained within "operations" account are supported
+    * please note Hosted Zone ID of your domain (using AWS console or awscli)
 
 
 ## NOTES:
@@ -85,8 +87,9 @@ on a pair of AWS accounts (operations and application).
 6. Note TF outputs with URL, login and password for Jenkins dashboard (to be open in web browser):
 
 * if Jenkins was deployed automatically (step 5. skipped), currently you need to check system logs from TF BH in EC2 console (Actions/Instance Settings/Get System Log) or by ssh-ing to TF BH and running `terraform output`
-* FIXME: this should be improved/automated
 * otherwise look into TF outputs after running TF manually
+* in default configurations, Jenkins URL should be reachable via: http://jenkins.YOUR_DOMAIN:8080
+* FIXME: this should be improved/automated
 
 7. Create TF state resources, cross-account role and (optionally) IAM Policies on application account
 
