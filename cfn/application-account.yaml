@@ -464,6 +464,7 @@ Resources:
               - iam:CreatePolicyVersion
               - iam:DeletePolicyVersion
               - iam:ListPolicyVersions
+              - iam:CreateServiceLinkedRole
             Resource: "*"
 
   IAMManagedPolicyKopsManagementNodeS3:
