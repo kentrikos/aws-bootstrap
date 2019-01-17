@@ -39,6 +39,16 @@ Other problems:
   Another reason for no K8s containers running on masters/nodes are missing awslogs permissions (indicated by messages in `/var/log/daemon.log`) - please double check IAM policies for masters and nodes.
 * for "AutoIAMMode", ensure your management role has permissions to create IAM Policies
 
+3. Bootstrap Jenkins not available immediately after deployment:
+* wait few minutes and retry (last step of deployment is restart which may take some time)
+* check Terraform output
+* ssh to jenkins EC2 instance and investigate status information and logs:
+  ```
+  sudo -i
+  systemctl status jenkins
+  less /var/log/cloud-init-output.log
+  less /var/log/jenkins/jenkins.log
+  ```
 
 When requesting help, please prepare/provide the following information:
 
