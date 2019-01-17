@@ -34,7 +34,7 @@ Other problems:
 
 2. Misconfigured IAM policies:
 
-* for "legacy" mode (IAM policies created manually) - please double check that policy documents were generated for correct cluster name and that correct policy names and json files were used when creating these policies
+* for "legacy" mode (IAM policies created manually) - please double check that policy documents were generated for correct  cluster name and that correct policy names and json files were used when creating these policies
   Also ensure that lenght limits were not reached for IAM entities (policies, roles) due to too long cluster name prefix.
   Another reason for no K8s containers running on masters/nodes are missing awslogs permissions (indicated by messages in `/var/log/daemon.log`) - please double check IAM policies for masters and nodes.
 * for "AutoIAMMode", ensure your management role has permissions to create IAM Policies
@@ -49,6 +49,9 @@ Other problems:
   less /var/log/cloud-init-output.log
   less /var/log/jenkins/jenkins.log
   ```
+
+4. Jenkins job hang on "Should we continue" in "Console Output" mode:
+   * switch to "Stage View", hover your mouse over blocking stage and click confirm button
 
 When requesting help, please prepare/provide the following information:
 
