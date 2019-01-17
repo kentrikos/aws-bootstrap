@@ -419,6 +419,7 @@ Resources:
             Action:
               - route53:GetHostedZone
               - route53:ListHostedZones
+              - route53:ListResourceRecordSets
             Resource: "*"
 
 
