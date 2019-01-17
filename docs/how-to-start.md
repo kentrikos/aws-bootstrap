@@ -75,7 +75,7 @@ on a pair of AWS accounts (operations and application).
   ```
   export Region=AWS_REGION AccountId=AWS_ACCOUNT_OPERATIONS_NUMERICAL_ID ProductDomainName=YOUR_PRODUCT_DOMAIN EnvironmentType=YOUR_ENVIRONMENT_TYPE
 
-  cd terraform/YOUR_REPO/ops/${Region}/jenkins-core-infra
+  cd terraform/YOUR_REPO/operations/${Region}/jenkins-core-infra
 
   terraform init -input=false \
   -backend-config="region=${Region}" \
