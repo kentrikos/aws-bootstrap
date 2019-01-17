@@ -71,14 +71,16 @@ on a pair of AWS accounts (operations and application).
 
 * login to BH via SSH
 * ensure your private configuration repository is cloned there already
-* execute terraform (replace "${Variable}"s with appropriate values:
+* execute terraform (use values appopriate for your deployment in `export` command):
   ```
-  cd terraform/YOUR_REPO/ops/AWS_REGION/jenkins-core-infra
+  export Region=AWS_REGION AccountId=AWS_ACCOUNT_OPERATIONS_NUMERICAL_ID ProductDomainName=YOUR_PRODUCT_DOMAIN EnvironmentType=YOUR_ENVIRONMENT_TYPE
+
+  cd terraform/YOUR_REPO/ops/${Region}/jenkins-core-infra
 
   terraform init -input=false \
   -backend-config="region=${Region}" \
   -backend-config="bucket=tf-state-bootstrap-${AccountId}-ops-${Region}" \
-  -backend-config="key=tf/tf-aws-product-domain-${ProductDomainName}-env-${EnvironmentType}/env/terraform.tfstate"
+  -backend-config="key=tf/tf-aws-product-domain-${ProductDomainName}-env-${EnvironmentType}/jenkins-core-infra/terraform.tfstate"
 
   terraform plan -var-file="../terraform.tfvars" -out=tfplan -input=false
   terraform apply -input=false tfplan
