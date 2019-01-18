@@ -35,8 +35,8 @@ on a pair of AWS accounts (operations and application).
 
 ## NOTES:
 
-    * some Jenkins jobs may require manual confirmation (e.g. for 'terraform apply' stage), please hover your mouse over the paused stage to see confirmation button
-    * steps marked "IAM_LIMITED_PERMISSIONS" are in general optional and may be required only for environments with limited IAM permissions where creating IAM Policies using AWS API is not allowed.
+  * some Jenkins jobs may require manual confirmation (e.g. for 'terraform apply' stage), please hover your mouse over the paused stage to see confirmation button
+  * steps marked "IAM_LIMITED_PERMISSIONS" are in general optional and may be required only for environments with limited IAM permissions where creating IAM Policies using AWS API is not allowed.
 
 
 ## STEPS:
@@ -132,4 +132,4 @@ on a pair of AWS accounts (operations and application).
 
 12. Deploy Kubernetes cluster on "application" account:
 
-  * run jx job from previous step (double check parameters)
+    * run jx job from previous step (double check parameters)
