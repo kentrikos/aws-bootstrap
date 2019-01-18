@@ -1,27 +1,27 @@
-# HOW TO START?
+# HOW TO START
 
 This guide describes steps necessary to deploy basic infrastructure for Kubernetes-based environment
 on a pair of AWS accounts (operations and application).
 
-
-## PREREQUISITIES:
+## PREREQUISITES
 
 1. AWS accounts created (e.g. by requesting through internal IT procedures):
 
-	* operations account (with VPC and at least 1 private subnet per Availability Zone)
-	* application account (with VPC including 3 public and 3 private subnets and NAT Gateway(s))
+    * operations account (with VPC and at least 1 private subnet per Availability Zone)
+    * application account (with VPC including 3 public and 3 private subnets and NAT Gateway(s))
     * please ensure at least /27 subnets everywhere (/26 recommended)
-	* VPC peering between the 2 accounts (operations/advanced, including DNS resolution)
+    * VPC peering between the 2 accounts (operations/advanced, including DNS resolution)
     * currently only scenario where operations account uses HTTP proxy is supported
-	* access to both accounts with AWS console or aws-cli with highly-administrative roles
+    * access to both accounts with AWS console or aws-cli with highly-administrative roles
 
 3. git and ssh clients on your laptop/workstation
 
 4. Access to Kentrikos project's public git repositories:
 
-	```
-	git clone https://github.com/kentrikos/aws-bootstrap.git
-	```
+    ```
+    git clone https://github.com/kentrikos/aws-bootstrap.git
+    ```
+
     (altrernatively use web browser to download repo from GitHub)
 
 5. Configuration repository (typically private as it contains environment-specific values such as AWS account numbers, VPC IDs, etc.):
@@ -32,14 +32,12 @@ on a pair of AWS accounts (operations and application).
     * currently, only zones maintained within "operations" account are supported
     * please note Hosted Zone ID of your domain (using AWS console or awscli)
 
+## NOTES
 
-## NOTES:
+    * some Jenkins jobs may require manual confirmation (e.g. for 'terraform apply' stage), please hover your mouse over the paused stage to see confirmation button
+    * steps marked "IAM_LIMITED_PERMISSIONS" are in general optional and may be required only for environments with limited IAM permissions where creating IAM Policies using AWS API is not allowed.
 
-  * some Jenkins jobs may require manual confirmation (e.g. for 'terraform apply' stage), please hover your mouse over the paused stage to see confirmation button
-  * steps marked "IAM_LIMITED_PERMISSIONS" are in general optional and may be required only for environments with limited IAM permissions where creating IAM Policies using AWS API is not allowed.
-
-
-## STEPS:
+## STEPS
 
 1. (IAM_LIMITED_PERMISSIONS) If necessary, manually create base IAM Policies on both your operations and application account:
 
@@ -65,13 +63,14 @@ on a pair of AWS accounts (operations and application).
     * name your stack in meaningful way (e.g. `demo-test-operations`, note that it will become prefix for EC2 instance name as well)
     * refer to field descriptions and set them accordingly
     * for "IAM_LIMITED_PERMISSIONS" environments set "AutoIAMMode" to false and adjust "IAMExistingManagedPoliciesPath" if necessary
-    * to deploy Jenkins with TF automatically leave "AutoDeployCoreInfraJenkins" set to "true" and skip next step (5.) 
+    * to deploy Jenkins with TF automatically leave "AutoDeployCoreInfraJenkins" set to "true" and skip next step (5.)
 
 5. (alternative, advanced step) Deploy core-infra Jenkins manually from TF BH:
 
     * login to BH via SSH
     * ensure your private configuration repository is cloned there already
     * execute terraform (use values appopriate for your deployment in `export` command):
+
       ```
       export Region=AWS_REGION AccountId=AWS_ACCOUNT_OPERATIONS_NUMERICAL_ID ProductDomainName=YOUR_PRODUCT_DOMAIN EnvironmentType=YOUR_ENVIRONMENT_TYPE
 
