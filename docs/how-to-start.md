@@ -18,10 +18,7 @@ on a pair of AWS accounts (operations and application).
 
 4. Access to Kentrikos project's public git repositories:
 
-    ```
-    git clone https://github.com/kentrikos/aws-bootstrap.git
-    ```
-
+    `git clone https://github.com/kentrikos/aws-bootstrap.git`
     (altrernatively use web browser to download repo from GitHub)
 
 5. Configuration repository (typically private as it contains environment-specific values such as AWS account numbers, VPC IDs, etc.):
@@ -71,7 +68,7 @@ on a pair of AWS accounts (operations and application).
     * ensure your private configuration repository is cloned there already
     * execute terraform (use values appopriate for your deployment in `export` command):
 
-      ```
+      ```shell
       export Region=AWS_REGION AccountId=AWS_ACCOUNT_OPERATIONS_NUMERICAL_ID ProductDomainName=YOUR_PRODUCT_DOMAIN EnvironmentType=YOUR_ENVIRONMENT_TYPE
 
       cd terraform/YOUR_REPO/operations/${Region}/jenkins-core-infra
@@ -89,7 +86,7 @@ on a pair of AWS accounts (operations and application).
 
     * if Jenkins was deployed automatically (step 5. skipped), currently you need to check system logs from TF BH in EC2 console (Actions/Instance Settings/Get System Log) or by ssh-ing to TF BH and running `terraform output`
     * otherwise look into TF outputs after running TF manually
-    * in default configurations, Jenkins URL should be reachable via: http://jenkins.YOUR_DOMAIN:8080
+    * in default configurations, Jenkins URL should be reachable via: <http://jenkins.YOUR_DOMAIN:8080>
     * FIXME: this should be improved/automated
 
 7. Create TF state resources, cross-account role and (optionally) IAM Policies on application account
@@ -110,7 +107,7 @@ on a pair of AWS accounts (operations and application).
 9. Deploy Kubernetes cluster on operations account using core-infra Jenkins:
 
     * open web dashboard
-    * FIXME: due to https://github.com/jenkinsci/ssh-credentials-plugin/pull/33 you need to update credentials manually (go to Manage Jekins/Configure Credentials/Credentials/git/Update and enter new line at the end of private key - just hit Enter and press Save)
+    * FIXME: due to <https://github.com/jenkinsci/ssh-credentials-plugin/pull/33> you need to update credentials manually (go to Manage Jekins/Configure Credentials/Credentials/git/Update and enter new line at the end of private key - just hit Enter and press Save)
     * run "Kubernetes_Install" job
 
 10. Deploy jx on K8s cluster in operations account (using core-infra Jenkins):
@@ -120,14 +117,14 @@ on a pair of AWS accounts (operations and application).
 
 11. Manually configure jx after it is installed (using URL and credentials for web dashboard from previous step, FIXME: this should be automated):
 
-    * configure HTTP proxy settings for plugins (Manage Jenkins/Manage Plugins/Advanced - please note 'Server' is without 'http://' and port and 'No Proxy' is one entry per line)
-    * go to 'Available' plugins tab, update the list ('Check now') and install (without restart) the following plugins: 'SSH Agent', 'AWS Parameter Store Build Wrapper'
-    * refresh the 'Installing Plugins/Upgrades' to verify plugins got installed
-    * manually create new pipeline job (from Jenkins main dashboard: 'New item/Pipeline', name it 'Kubernetes_Install_On_Application')
+    * configure HTTP proxy settings for plugins (Manage Jenkins/Manage Plugins/Advanced - please note `Server` is without `http://` and port and `No Proxy` is one entry per line)
+    * go to `Available` plugins tab, update the list (`Check now`) and install (without restart) the following plugins: `SSH Agent`, `AWS Parameter Store Build Wrapper`
+    * refresh the `Installing Plugins/Upgrades` to verify plugins got installed
+    * manually create new pipeline job (from Jenkins main dashboard: `New item/Pipeline`, name it `Kubernetes_Install_On_Application`)
     * copy&paste Pipeline script from `jenkins-bootstrap-pipelines` repository, `/application/kubernetes/install/Jenkinsfile`
     * update top `parameters` section with defaults apropriate for your environment
     * save the job
-    * add private SSH key for accessing your configuration repository (from Jenkins main dashboard: 'Credentials/System/Global/Add Credentials/SSH Username with private key', Username: 'git', ID: 'bitbucket-key', enter key directly with 1 empty line at the end)
+    * add private SSH key for accessing your configuration repository (from Jenkins main dashboard: 'Credentials/System/Global/Add Credentials/SSH Username with private key', Username: `git`, ID: `bitbucket-key`, enter key directly with 1 empty line at the end)
 
 12. Deploy Kubernetes cluster on "application" account:
 
