@@ -18,7 +18,10 @@ on a pair of AWS accounts (operations and application).
 
 4. Access to Kentrikos project's public git repositories:
 
-    `git clone https://github.com/kentrikos/aws-bootstrap.git`
+    ```shell
+    git clone https://github.com/kentrikos/aws-bootstrap.git
+    ```
+
     (altrernatively use web browser to download repo from GitHub)
 
 5. Configuration repository (typically private as it contains environment-specific values such as AWS account numbers, VPC IDs, etc.):
@@ -31,8 +34,8 @@ on a pair of AWS accounts (operations and application).
 
 ## NOTES
 
-    * some Jenkins jobs may require manual confirmation (e.g. for 'terraform apply' stage), please hover your mouse over the paused stage to see confirmation button
-    * steps marked "IAM_LIMITED_PERMISSIONS" are in general optional and may be required only for environments with limited IAM permissions where creating IAM Policies using AWS API is not allowed.
+* some Jenkins jobs may require manual confirmation (e.g. for 'terraform apply' stage), please hover your mouse over the paused stage to see confirmation button
+* steps marked "IAM_LIMITED_PERMISSIONS" are in general optional and may be required only for environments with limited IAM permissions where creating IAM Policies using AWS API is not allowed.
 
 ## STEPS
 
