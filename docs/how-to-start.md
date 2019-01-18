@@ -14,9 +14,9 @@ on a pair of AWS accounts (operations and application).
     * currently only scenario where operations account uses HTTP proxy is supported
     * access to both accounts with AWS console or aws-cli with highly-administrative roles
 
-3. git and ssh clients on your laptop/workstation
+2. git and ssh clients on your laptop/workstation
 
-4. Access to Kentrikos project's public git repositories:
+3. Access to Kentrikos project's public git repositories:
 
     ```shell
     git clone https://github.com/kentrikos/aws-bootstrap.git
@@ -24,11 +24,11 @@ on a pair of AWS accounts (operations and application).
 
     (altrernatively use web browser to download repo from GitHub)
 
-5. Configuration repository (typically private as it contains environment-specific values such as AWS account numbers, VPC IDs, etc.):
+4. Configuration repository (typically private as it contains environment-specific values such as AWS account numbers, VPC IDs, etc.):
     * e.g. located in your private GitHub repo or Bitbucket, please contact your admin
     * __private__ SSH key allowing read-only access
 
-6. Route53 private hosted zone for a domain that will be used to access services (e.g. Jenkins-X) via convenient names.
+5. Route53 private hosted zone for a domain that will be used to access services (e.g. Jenkins-X) via convenient names.
     * currently, only zones maintained within "operations" account are supported
     * please note Hosted Zone ID of your domain (using AWS console or awscli)
 
