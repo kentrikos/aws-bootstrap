@@ -10,6 +10,12 @@ Metadata:
         - OperationsAWSAccountNumber
     -
       Label:
+        default: "Top-level environment configuration"
+      Parameters:
+        - ProductDomainName
+        - EnvironmentType
+    -
+      Label:
         default: "Automation control switches"
       Parameters:
         - AutoIAMMode
@@ -22,6 +28,14 @@ Parameters:
     OperationsAWSAccountNumber:
       Description: Number of Operations AWS account that will be allowed to assume cross-account role
       Type: String
+    ProductDomainName:
+      Description: Name of product domain (will be used as basis for other names)
+      Type: String
+      Default: demo
+    EnvironmentType:
+      Description: Type of environment (e.g. dev, test, prod)
+      Type: String
+      Default: test
     AutoIAMMode:
       Description: IAM Policies will be created automatically (requires IAM administrative permissions when deploying this template, please pre-create policies manually otherwise)
       Type: String
@@ -79,7 +93,7 @@ Resources:
         - !Ref IAMManagedPolicyKentrikosIAM
         - !Ref IAMManagedPolicyKentrikosS3
         - !Ref IAMManagedPolicyKentrikosVPC
-      RoleName: KopsCrossAccount
+      RoleName: !Sub 'KENTRIKOS_${AWS::Region}_${ProductDomainName}_${EnvironmentType}_CrossAccount'
       MaxSessionDuration: 7200
 
   KopsCrossAccountRoleIsNotAutoIAMMode:
@@ -143,7 +157,7 @@ Resources:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KENTRIKOS_autoscaling_elb_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
+      ManagedPolicyName: !Sub "KENTRIKOS_autoscaling_elb_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -165,7 +179,7 @@ Resources:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KENTRIKOS_lma_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
+      ManagedPolicyName: !Sub "KENTRIKOS_lma_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -244,7 +258,7 @@ Resources:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KENTRIKOS_dynamodb_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
+      ManagedPolicyName: !Sub "KENTRIKOS_dynamodb_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -264,7 +278,7 @@ Resources:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KENTRIKOS_ec2_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
+      ManagedPolicyName: !Sub "KENTRIKOS_ec2_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -386,7 +400,7 @@ Resources:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KENTRIKOS_ecr_route53_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
+      ManagedPolicyName: !Sub "KENTRIKOS_ecr_route53_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -428,7 +442,7 @@ Resources:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KENTRIKOS_iam_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
+      ManagedPolicyName: !Sub "KENTRIKOS_iam_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -472,7 +486,7 @@ Resources:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KENTRIKOS_s3_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
+      ManagedPolicyName: !Sub "KENTRIKOS_s3_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -499,7 +513,7 @@ Resources:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KENTRIKOS_vpc_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
+      ManagedPolicyName: !Sub "KENTRIKOS_vpc_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
