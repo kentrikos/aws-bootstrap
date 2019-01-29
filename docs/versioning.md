@@ -29,11 +29,38 @@ Git tags for patches for older releases could be done on stable/fix branch eg. 1
 
 ## Developing 
 
-New changes are developed on branch from master. Testing changes from dependent modules/repos are done on separate branch. To upgrade dependency first that repos should be tagged and than upgraded in dependant repo.
+New changes should be developed and tested using features branches (checkout from master). Dependencies should be upgraded by tagging repositories in bottom to top manner.
+
+### Branching
+
+* Master branch is for stable, tested changes.
+* Features are developing on separate branches that ara checkout from master
 
 ## Deployment
 
-Version of Kentrkios project is based on this repo version. All other dependencies as an requirement in REQUIREMENTS file as repo and version. 
+This repository (aws-bootstrap) is considered top-level repository for Kentrikos project and its version is bound to required versions of all other dependent repositories as described in REQUIREMENTS file as repo:version per line
+eg.
+Giving provided below  structure of dependency, change in terraforma-ws-kops module must be updated and tagged from bottom to top level repo. 
+```
+aws-bootstrap
+|
+ \template-environment-configuration
+  |
+   \template-environment-configuration
+    |
+     \terraform-aws-kops
+```
+
+### How to deploy from latest stable version
+
+1. Take last version from master branch of this repository (aws-bootstrap) 
+1. Follow instruction on "Environment configuration" section. 
+
+### How to deploy from latest development version
+
+1. Take last stable version of Kentrikos
+1. In configuration repo update selected module to desired branch or tag
+1. Apply changes to environment
 
 ## Terraform 
 
