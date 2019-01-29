@@ -4,20 +4,21 @@ Troubleshooting notes for Kentrikos deployments.
 # Troubleshooting
 Most common problems fall into 4 categories:
 
-1. Wrong parameters to deployment scripts:
+1. Misconfigured AWS accounts/VPCs:
+
+  * ensure all "PREREQUISITIES" in `how-to-start.md` are met
+
+2. Wrong parameters to deployment scripts:
 
   * please double-check you've correctly passed required arguments
   * ensure you have clearly planned on which AWS account K8s clusters will be deployed and into which VPCs and subnets
 
-2. Misconfigure AWS accounts/VPCs:
-
-  * ensure all "PREREQUISITIES" in `how-to-start.md` are met
-
 3. Wrong DNS/HTTP proxy configuration on AWS accounts (especially "operations" types):
 
   * this can prevent Internet connectivity which is required to download necessary K8s components from public repositories
-  * to investigate connectivity on cluster instances ssh to private IPs (can be found in AWS console), username is `admin`, key can be found in `.ssh/` directory on Jenkins.
-  Then test with `wget`, `docker ps` (there should be K8s services running) and also `docker run hello-world`. Also check `/var/log/daemon.log`, very often answer can be found there.
+  * to investigate connectivity on cluster instances ssh to private IPs (can be found in AWS console), username is `admin` (Debian) or `ec2-user` (Amazon Linux 2), key can be found in `.ssh/` directory on Jenkins
+  or use your AWS SSH key (recommended).
+  Then test with `wget`, `docker ps` (there should be K8s services running) and also `docker run hello-world`. Also check `/var/log/daemon.log` (Debian) or use `journalctl` (Amazon Linux 2), very often answer can be found there.
   * debugging K8s deployment on application is trickier as jobs are run in pods from jx (try `kubectl -n jx exec -it JENKINS_POD_NAME -- /bin/bash` from core-infra Jenkins)
   * ensure public DNS resolution works on "application" account (e.g. launch EC2 instance and make simple test such as `host github.com`)
   * similarly, ensure Internet connectivity on "operations" account (public DNS resolution is not required since HTTP proxy is used)
