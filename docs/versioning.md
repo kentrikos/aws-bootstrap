@@ -87,7 +87,7 @@ module "jenkins" {
 
 To update environment configuration we should base on desired version of Kentrikos project.
 
-1. From aws-bootsrap repo we choose proper version
-1. From REQUIREMENTS we take required version of template-environment-configuration repo
-1. Check changes from last version of template-environment-configuration and selected.
+1. From aws-bootstrap repo we choose proper version.
+1. From REQUIREMENTS we take required version of template-environment-configuration repo.
+1. Check changes against last version of private template-environment-configuration repo.
 1. Apply changes to private environment configuration repo.
