@@ -40,7 +40,7 @@ New changes should be developed and tested using features branches (checkout fro
 
 This repository (aws-bootstrap) is considered top-level repository for Kentrikos project and its version is bound to required versions of all other dependent repositories as described in REQUIREMENTS file as repo:version per line
 eg.
-Giving provided below  structure of dependency, change in terraforma-ws-kops module must be updated and tagged from bottom to top level repo. 
+Giving provided below  structure of dependency, change in terraform-aws-kops module must be updated and tagged from bottom to top level repo. 
 ```
 aws-bootstrap
 |
@@ -54,7 +54,7 @@ aws-bootstrap
 ### How to deploy from latest stable version
 
 1. Take last version from master branch of this repository (aws-bootstrap) 
-1. Follow instruction on "Environment configuration" section. 
+1. Follow instructions on "Environment configuration" section. 
 
 ### How to deploy from latest development version
 
@@ -85,9 +85,9 @@ module "jenkins" {
 
 ## Environment configuration
 
-To update environment configuration we should base on desire version of Kentrikos project.
+To update environment configuration we should base on desired version of Kentrikos project.
 
-1. From aws-bootsrap repo we chouse proper version
-1. From REQUIREMENTS we take depended version of template-environment-configuration repo
-1. Check changes from our last version of template-environment-configuration and selected.
+1. From aws-bootsrap repo we choose proper version
+1. From REQUIREMENTS we take required version of template-environment-configuration repo
+1. Check changes from last version of template-environment-configuration and selected.
 1. Apply changes to private environment configuration repo.
