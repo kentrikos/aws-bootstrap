@@ -46,7 +46,7 @@ aws-bootstrap
 |
  \template-environment-configuration
   |
-   \template-environment-configuration
+   \terraform-aws-account-operations
     |
      \terraform-aws-kops
 ```
