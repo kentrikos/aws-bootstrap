@@ -23,13 +23,13 @@ Additional labels for pre-release and build metadata are available as extensions
 
 ## Tagging
 
-Git tags MUST follow MAJOR.MINOR.PATCH convention eg. 0.0.1, 0.1.0, 1.0.0  on master branch.
-Git tags on non master branches (features to master) should add -rc -alfa -beta if needed for major changes.
-Git tags for patches for older releases could be done on stable/fix branch eg. 1.2.3
+* Git tags MUST follow MAJOR.MINOR.PATCH convention eg. 0.0.1, 0.1.0, 1.0.0  on master branch.
+* Git tags on non master branches (features to master) should add -rc -alfa -beta if needed for major changes.
+* Git tags for patches for older releases could be done on stable/fix branch eg. 1.2.3
 
 ## Developing 
 
-New changes should be developed and tested using features branches (checkout from master). Dependencies should be upgraded by tagging repositories in bottom to top manner.
+New changes should be developed and tested using features branches (checkout from master). Dependencies should be upgraded by tagging repositories in bottom to top manner. 
 
 ### Branching
 
