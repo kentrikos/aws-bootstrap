@@ -112,6 +112,7 @@ on a pair of AWS accounts (operations and application).
 
     * open web dashboard
     * FIXME: due to <https://github.com/jenkinsci/ssh-credentials-plugin/pull/33> you need to update credentials manually (go to Manage Jekins/Configure Credentials/Credentials/git/Update and enter new line at the end of private key - just hit Enter and press Save)
+    * run "Generate_JX_Docker_Image" job 
     * run "Kubernetes_Install" job
 
 10. Deploy jx on K8s cluster in operations account (using core-infra Jenkins):
