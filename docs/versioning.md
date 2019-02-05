@@ -23,17 +23,45 @@ Additional labels for pre-release and build metadata are available as extensions
 
 ## Tagging
 
-Git tags MUST follow MAJOR.MINOR.PATCH convention eg. 0.0.1, 0.1.0, 1.0.0  on master branch.
-Git tags on non master branches (features to master) should add -rc -alfa -beta if needed for major changes.
-Git tags for patches for older releases could be done on stable/fix branch eg. 1.2.3
+* Git tags MUST follow MAJOR.MINOR.PATCH convention eg. 0.0.1, 0.1.0, 1.0.0  on master branch.
+* Git tags on non master branches (features to master) should add -rc -alfa -beta if needed for major changes.
+* Git tags for patches for older releases could be done on stable/fix branch eg. 1.2.3
+* Before tagging update VERSION file with correct version.
 
 ## Developing 
 
-New changes are developed on branch from master. Testing changes from dependent modules/repos are done on separate branch. To upgrade dependency first that repos should be tagged and than upgraded in dependant repo.
+New changes should be developed and tested using features branches (checkout from master). Dependencies should be upgraded by tagging repositories in bottom to top manner. 
+
+### Branching
+
+* Master branch is for stable, tested changes.
+* Features are developing on separate branches that ara checkout from master
 
 ## Deployment
 
-Version of Kentrkios project is based on this repo version. All other dependencies as an requirement in REQUIREMENTS file as repo and version. 
+This repository (aws-bootstrap) is considered top-level repository for Kentrikos project and its version is bound to required versions of all other dependent repositories as described in REQUIREMENTS file as repo:version per line
+eg.
+Giving provided below  structure of dependency, change in terraform-aws-kops module must be updated and tagged from bottom to top level repo. 
+```
+aws-bootstrap
+|
+ \template-environment-configuration
+  |
+   \terraform-aws-account-operations
+    |
+     \terraform-aws-kops
+```
+
+### How to deploy from latest stable version
+
+1. Take last version from master branch of this repository (aws-bootstrap) 
+1. Follow instructions on "Environment configuration" section. 
+
+### How to deploy from latest development version
+
+1. Take last stable version of Kentrikos
+1. In configuration repo update selected module to desired branch or tag
+1. Apply changes to environment
 
 ## Terraform 
 
@@ -58,9 +86,9 @@ module "jenkins" {
 
 ## Environment configuration
 
-To update environment configuration we should base on desire version of Kentrikos project.
+To update environment configuration we should base on desired version of Kentrikos project.
 
-1. From aws-bootsrap repo we chouse proper version
-1. From REQUIREMENTS we take depended version of template-environment-configuration repo
-1. Check changes from our last version of template-environment-configuration and selected.
+1. From aws-bootstrap repo we choose proper version.
+1. From REQUIREMENTS we take required version of template-environment-configuration repo.
+1. Check changes against last version of private template-environment-configuration repo.
 1. Apply changes to private environment configuration repo.
