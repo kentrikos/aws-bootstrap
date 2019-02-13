@@ -177,7 +177,7 @@ Resources:
             Action:
               - sts:AssumeRole
       ManagedPolicyArns:
-        - !Ref IAMManagedPolicyKopsManagementNodeAutoScalingELB
+        - !Ref IAMManagedPolicyKopsManagementNodeAutoScalingELBEKS
         - !Ref IAMManagedPolicyKopsManagementNodeLMA
         - !Ref IAMManagedPolicyKopsManagementNodeDynamoDB
         - !Ref IAMManagedPolicyKopsManagementNodeEC2
@@ -202,7 +202,7 @@ Resources:
             Action:
               - sts:AssumeRole
       ManagedPolicyArns:
-        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_autoscaling_elb"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_autoscaling_elb_eks"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_lma"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_dynamodb"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KOPS_MANAGEMENT_NODE_ec2"
@@ -371,11 +371,11 @@ Resources:
 # (optional, requires appropriate IAM permisions when deploying this template)
 ##############################################################################
 
-  IAMManagedPolicyKopsManagementNodeAutoScalingELB:
+  IAMManagedPolicyKopsManagementNodeAutoScalingELBEKS:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_autoscaling_elb"
+      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_autoscaling_elb_eks"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -391,6 +391,12 @@ Resources:
             Effect: Allow
             Action:
               - elasticloadbalancing:*
+            Resource: "*"
+          -
+            Sid: eksAdmin
+            Effect: Allow
+            Action:
+              - eks:*
             Resource: "*"
 
   IAMManagedPolicyKopsManagementNodeLMA:
