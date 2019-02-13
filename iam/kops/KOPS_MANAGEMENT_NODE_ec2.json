@@ -114,12 +114,6 @@
                 "ec2:DescribeTags"
             ],
             "Resource": "*"
-        },
-        {
-            "Sid": "EKSAdmin",
-            "Effect": "Allow",
-            "Action": "eks:*",
-            "Resource": "*"
         }
     ]
 }
