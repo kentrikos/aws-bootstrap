@@ -12,6 +12,12 @@
             "Effect": "Allow",                                                  
             "Action": "elasticloadbalancing:*",                                 
             "Resource": "*"                                                     
+        },
+        {
+            "Sid": "eksAdmin",
+            "Effect": "Allow",
+            "Action": "eks:*",
+            "Resource": "*"
         }
     ]
 }
