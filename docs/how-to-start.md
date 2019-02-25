@@ -125,11 +125,6 @@ on a pair of AWS accounts (operations and application).
 
     * configure HTTP proxy settings for plugins (Manage Jenkins/Manage Plugins/Advanced - please note `Server` is without `http://` and port and `No Proxy` is one entry per line)
     * go to `Available` plugins tab, update the list (`Check now`) and install (without restart) the following plugins: `SSH Agent`, `AWS Parameter Store Build Wrapper`
-    * refresh the `Installing Plugins/Upgrades` to verify plugins got installed
-    * manually create new pipeline job (from Jenkins main dashboard: `New item/Pipeline`, name it `Kubernetes_Install_On_Application`)
-    * copy&paste Pipeline script from `jenkins-bootstrap-pipelines` repository, `/application/kubernetes/install/Jenkinsfile`
-    * update top `parameters` section with defaults apropriate for your environment
-    * save the job
     * add private SSH key for accessing your configuration repository (from Jenkins main dashboard: 'Credentials/System/Global/Add Credentials/SSH Username with private key', Username: `git`, ID: `bitbucket-key`, enter key directly with 1 empty line at the end)
 
 12. Deploy Kubernetes cluster on "application" account:
