@@ -10,6 +10,12 @@ Metadata:
         - OperationsAWSAccountNumber
     -
       Label:
+        default: "Top-level environment configuration"
+      Parameters:
+        - ProductDomainName
+        - EnvironmentType
+    -
+      Label:
         default: "Automation control switches"
       Parameters:
         - AutoIAMMode
@@ -22,6 +28,14 @@ Parameters:
     OperationsAWSAccountNumber:
       Description: Number of Operations AWS account that will be allowed to assume cross-account role
       Type: String
+    ProductDomainName:
+      Description: Name of product domain (will be used as basis for other names)
+      Type: String
+      Default: demo
+    EnvironmentType:
+      Description: Type of environment (e.g. dev, test, prod)
+      Type: String
+      Default: test
     AutoIAMMode:
       Description: IAM Policies will be created automatically (requires IAM administrative permissions when deploying this template, please pre-create policies manually otherwise)
       Type: String
@@ -71,15 +85,15 @@ Resources:
           Action:
           - sts:AssumeRole
       ManagedPolicyArns:
-        - !Ref IAMManagedPolicyKopsManagementNodeAutoScalingELB
-        - !Ref IAMManagedPolicyKopsManagementNodeLMA
-        - !Ref IAMManagedPolicyKopsManagementNodeDynamoDB
-        - !Ref IAMManagedPolicyKopsManagementNodeEC2
-        - !Ref IAMManagedPolicyKopsManagementNodeECR
-        - !Ref IAMManagedPolicyKopsManagementNodeIAM
-        - !Ref IAMManagedPolicyKopsManagementNodeS3
-        - !Ref IAMManagedPolicyKopsManagementNodeVPC
-      RoleName: KopsCrossAccount
+        - !Ref IAMManagedPolicyKentrikosAutoScalingELB
+        - !Ref IAMManagedPolicyKentrikosLMA
+        - !Ref IAMManagedPolicyKentrikosDynamoDB
+        - !Ref IAMManagedPolicyKentrikosEC2
+        - !Ref IAMManagedPolicyKentrikosECR
+        - !Ref IAMManagedPolicyKentrikosIAM
+        - !Ref IAMManagedPolicyKentrikosS3
+        - !Ref IAMManagedPolicyKentrikosVPC
+      RoleName: !Sub 'KENTRIKOS_${AWS::Region}_${ProductDomainName}_${EnvironmentType}_CrossAccount'
       MaxSessionDuration: 7200
 
   KopsCrossAccountRoleIsNotAutoIAMMode:
@@ -97,14 +111,15 @@ Resources:
           Action:
           - sts:AssumeRole
       ManagedPolicyArns:
-        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_autoscaling_elb'
-        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_lma'
-        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_dynamodb'
-        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_ec2'
-        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_ecr_route53'
-        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_iam'
-        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_s3'
-        - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/customer/KOPS_MANAGEMENT_NODE_vpc'
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_autoscaling_elb"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_lma"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_dynamodb"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_ec2"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_ecr_route53"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_iam"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_s3"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_vpc"
+
       RoleName: KopsCrossAccount
       MaxSessionDuration: 7200
 
@@ -113,7 +128,7 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       AccessControl: Private
-      BucketName: !Sub 'tf-state-bootstrap-${AWS::AccountId}-application-${AWS::Region}'
+      BucketName: !Sub 'tf-${AWS::AccountId}-app-${AWS::Region}-${ProductDomainName}-${EnvironmentType}'
       VersioningConfiguration:
         Status: Enabled
 
@@ -130,7 +145,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
-      TableName: !Sub 'tf-state-lock-bootstrap'
+      TableName: !Sub 'tf-state-lock-bootstrap-${ProductDomainName}-${EnvironmentType}'
 
 
 ##############################################################################
@@ -138,11 +153,11 @@ Resources:
 # (optional, requires appropriate IAM permisions when deploying this template)
 ##############################################################################
 
-  IAMManagedPolicyKopsManagementNodeAutoScalingELB:
+  IAMManagedPolicyKentrikosAutoScalingELB:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_autoscaling_elb"
+      ManagedPolicyName: !Sub "KENTRIKOS_autoscaling_elb_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -160,11 +175,11 @@ Resources:
               - elasticloadbalancing:*
             Resource: "*"
 
-  IAMManagedPolicyKopsManagementNodeLMA:
+  IAMManagedPolicyKentrikosLMA:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_lma"
+      ManagedPolicyName: !Sub "KENTRIKOS_lma_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -239,11 +254,11 @@ Resources:
               - sns:GetSMSAttributes
             Resource: "*"
 
-  IAMManagedPolicyKopsManagementNodeDynamoDB:
+  IAMManagedPolicyKentrikosDynamoDB:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_dynamodb"
+      ManagedPolicyName: !Sub "KENTRIKOS_dynamodb_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -259,11 +274,11 @@ Resources:
               - dynamodb:*
             Resource: "*"
 
-  IAMManagedPolicyKopsManagementNodeEC2:
+  IAMManagedPolicyKentrikosEC2:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_ec2"
+      ManagedPolicyName: !Sub "KENTRIKOS_ec2_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -381,11 +396,11 @@ Resources:
               - ec2:DescribeTags
             Resource: "*"
 
-  IAMManagedPolicyKopsManagementNodeECR:
+  IAMManagedPolicyKentrikosECR:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_ecr_route53"
+      ManagedPolicyName: !Sub "KENTRIKOS_ecr_route53_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -423,11 +438,11 @@ Resources:
             Resource: "*"
 
 
-  IAMManagedPolicyKopsManagementNodeIAM:
+  IAMManagedPolicyKentrikosIAM:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_iam"
+      ManagedPolicyName: !Sub "KENTRIKOS_iam_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -467,11 +482,11 @@ Resources:
               - iam:ListPolicyVersions
             Resource: "*"
 
-  IAMManagedPolicyKopsManagementNodeS3:
+  IAMManagedPolicyKentrikosS3:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_s3"
+      ManagedPolicyName: !Sub "KENTRIKOS_s3_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -494,11 +509,11 @@ Resources:
               - s3:GetBucketCors
             Resource: "*"
 
-  IAMManagedPolicyKopsManagementNodeVPC:
+  IAMManagedPolicyKentrikosVPC:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: "KOPS_MANAGEMENT_NODE_vpc"
+      ManagedPolicyName: !Sub "KENTRIKOS_vpc_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
