@@ -179,7 +179,7 @@ Resources:
             Effect: Allow
             Action:
               - eks:*
-            Resource: "arn:aws:eks:${AWS::Region}:*:cluster/*"
+            Resource: "arn:aws:eks:*:*:cluster/*"
 
   IAMManagedPolicyKentrikosLMA:
     Condition: IsAutoIAMMode
