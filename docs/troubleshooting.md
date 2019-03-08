@@ -70,10 +70,17 @@ Most common problems fall into 4 categories:
     helm init --client-only
     ```
 
+6. Despite correct proxy settings K8s deployment fails:
+  * ensure access to SSM Parameter Store (that is used to keep proxy settings for Jenkins-es)
+  * do not add/modify proxy-related environment variables directly in Jenkins-es unless you know what you are doing (it may affect pulling required configuration from SSM)
+
+
 # How to request help  
 
 When requesting help, please prepare/provide the following information:
 
 * AWS account numbers used and names of corresponding management roles
+* information whether your accounts are within AWS Organizations
 * copy of your configuration repository (e.g. tarball/gzip/URL)
 * full outputs from commands/Jenkins jobs run
+* history of deployment steps (as described in how-to-start.md) and all non-standard/modified actions
