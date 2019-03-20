@@ -1,0 +1,17 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "autoscaling",
+            "Effect": "Allow",                                                  
+            "Action": "autoscaling:*",                                 
+            "Resource": "*"                                                     
+        },
+        {
+            "Sid": "elasticloadbalancing",
+            "Effect": "Allow",                                                  
+            "Action": "elasticloadbalancing:*",                                 
+            "Resource": "*"                                                     
+        }
+    ]
+}
