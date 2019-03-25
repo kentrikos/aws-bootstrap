@@ -9,7 +9,7 @@ on a pair of AWS accounts (operations and application).
 
     * operations account (with VPC and at least 1 private subnet per Availability Zone)
     * application account (with VPC including 3 public and 3 private subnets and NAT Gateway(s))
-    * please ensure at least /27 subnets everywhere (/26 recommended)
+    * please ensure at least /27 subnets everywhere (/26 recommended for eks)
     * please use short domain-name in DHCP options set for your VPC (Kubernetes hostnames "ip-NNN-NNN-NNN-NNN.DOMAIN_NAME" cannot exceed 63 characters)
     * VPC peering between the 2 accounts (operations/advanced, including DNS resolution)
     * currently only scenario where operations account uses HTTP proxy is supported
@@ -23,7 +23,7 @@ on a pair of AWS accounts (operations and application).
     git clone https://github.com/kentrikos/aws-bootstrap.git
     ```
 
-    (altrernatively use web browser to download repo from GitHub)
+    (alternatively use web browser to download repo from GitHub)
 
 4. Configuration repository (typically private as it contains environment-specific values such as AWS account numbers, VPC IDs, etc.):
     * e.g. located in your private GitHub repo or Bitbucket, please contact your admin
@@ -70,7 +70,7 @@ on a pair of AWS accounts (operations and application).
 
     * login to BH via SSH
     * ensure your private configuration repository is cloned there already
-    * execute terraform (use values appopriate for your deployment in `export` command):
+    * execute terraform (use values appropriate for your deployment in `export` command):
 
       ```shell
       export Region=AWS_REGION AccountId=AWS_ACCOUNT_OPERATIONS_NUMERICAL_ID ProductDomainName=YOUR_PRODUCT_DOMAIN EnvironmentType=YOUR_ENVIRONMENT_TYPE
@@ -104,29 +104,75 @@ on a pair of AWS accounts (operations and application).
     * refer to other field descriptions and set them accordingly
     * ensure ARN of cross-account role created matches variable(s) in your configuration repository
 
+### EKS
+
+8. Deploy Kubernetes cluster on operations account using core-infra Jenkins:
+
+    * open web dashboard
+    * open "Infrastructure" folder 
+    * run "Create EKS cluster in Operations Account" job
+
+9. Deploy Kubernetes cluster on application account using core-infra Jenkins:
+
+    * open web dashboard
+    * open "Infrastructure" folder 
+    * run "Create EKS cluster in Application Account" job
+
+### KOPS
+
 8. Create IAM Policies for Kubernetes cluster instances (masters and nodes) on both accounts:
 
-    * run 2 jobs on core-infra Jenkins ("Generate_IAM_Policies_Operations" and "Generate_IAM_Policies_Application")
+    * open web dashboard
+    * open "Experimental" folder 
+    * run 2 jobs on core-infra Jenkins ("Generate IAM Policies for KOPS in Operations Account" and "Generate IAM Policies for KOPS in Application Account")
     * if you are not allowed to create policies directly it will just create json files for you that you can use in your internal procedures to have policies created (requires proper configuration entry in configuration repository)
 
 9. Deploy Kubernetes cluster on operations account using core-infra Jenkins:
 
     * open web dashboard
-    * FIXME: due to <https://github.com/jenkinsci/ssh-credentials-plugin/pull/33> you need to update credentials manually (go to Manage Jekins/Configure Credentials/Credentials/git/Update and enter new line at the end of private key - just hit Enter and press Save)
-    * run "Kubernetes_Install" job
+    * open "Experimental" folder 
+    * run "Create KOPS cluster in Operations Account" job
 
 10. Deploy jx on K8s cluster in operations account (using core-infra Jenkins):
 
-    * run "Generate_JX_Docker_Image" job 
-    * run "Install_JX" job
+    * open web dashboard
+    * open "Experimental" folder 
+    * run "Generate JenkinsX Image" job 
+    * run "Deploy JenkinsX in Operations Account" job
     * note that it will create a DNS entry in Route53 automatically (wildcard alias to be used by all Jenkins-X components)
 
 11. Manually configure jx after it is installed (using URL and credentials for web dashboard from previous step, FIXME: this should be automated):
 
-    * configure HTTP proxy settings for plugins (Manage Jenkins/Manage Plugins/Advanced - please note `Server` is without `http://` and port and `No Proxy` is one entry per line)
-    * go to `Available` plugins tab, update the list (`Check now`) and install (without restart) the following plugins: `SSH Agent`, `AWS Parameter Store Build Wrapper`
     * add private SSH key for accessing your configuration repository (from Jenkins main dashboard: 'Credentials/System/Global/Add Credentials/SSH Username with private key', Username: `git`, ID: `bitbucket-key`, enter key directly with 1 empty line at the end)
 
-12. Deploy Kubernetes cluster on "application" account:
+12. Deploy Kubernetes cluster on application account using core-infra Jenkins:
 
-    * run jx job  "Install_Kubernetes"
+    * open web dashboard
+    * open "Experimental" folder 
+    * run job "Create KOPS cluster in Application Account"
+
+
+### LMA
+1. Deploy Ingress using core-infra Jenkins:
+    * open web dashboard
+    * open "LMA" folder 
+    * run job "Create Ingress in Operations Account"
+    * select eks or kops base on previously deployed cluster
+
+2. Deploy Grafana using core-infra Jenkins:
+    * open web dashboard
+    * open "LMA" folder 
+    * run job "Deploy Grafana in Operations Account"
+    * select eks or kops base on previously deployed cluster
+
+3. Deploy Prometheus on operations account using core-infra Jenkins:
+    * open web dashboard
+    * open "LMA" folder 
+    * run job "Deploy Prometheus in Operations Account"
+    * select eks or kops base on previously deployed cluster
+
+4. Deploy Prometheus on operations account using core-infra Jenkins:
+    * open web dashboard
+    * open "LMA" folder 
+    * run job "Deploy Prometheus in Application Account"
+    * select eks or kops base on previously deployed cluster
