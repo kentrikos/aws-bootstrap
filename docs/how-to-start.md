@@ -37,6 +37,7 @@ on a pair of AWS accounts (operations and application).
 
 * some Jenkins jobs may require manual confirmation (e.g. for 'terraform apply' stage), please hover your mouse over the paused stage to see confirmation button
 * steps marked "IAM_LIMITED_PERMISSIONS" are in general optional and may be required only for environments with limited IAM permissions where creating IAM Policies using AWS API is not allowed.
+* Kentrikos supports 2 flavors of Kubernetes clusters: AWS EKS (default and recommended) and kops (e.g. for regions where EKS is not available). If unsure, please use EKS.
 
 ## STEPS
 
@@ -153,26 +154,26 @@ on a pair of AWS accounts (operations and application).
 
 
 ### LMA
-1. Deploy Ingress using core-infra Jenkins:
+1. Deploy Ingress on operations account using core-infra Jenkins:
     * open web dashboard
     * open "LMA" folder 
     * run job "Create Ingress in Operations Account"
-    * select eks or kops base on previously deployed cluster
+    * select eks or kops depending on previously deployed cluster
 
-2. Deploy Grafana using core-infra Jenkins:
+2. Deploy Grafana on operations account using core-infra Jenkins:
     * open web dashboard
     * open "LMA" folder 
     * run job "Deploy Grafana in Operations Account"
-    * select eks or kops base on previously deployed cluster
+    * select eks or kops depending on previously deployed cluster
 
 3. Deploy Prometheus on operations account using core-infra Jenkins:
     * open web dashboard
     * open "LMA" folder 
     * run job "Deploy Prometheus in Operations Account"
-    * select eks or kops base on previously deployed cluster
+    * select eks or kops depending on previously deployed cluster
 
-4. Deploy Prometheus on operations account using core-infra Jenkins:
+4. Deploy Prometheus on application account using core-infra Jenkins:
     * open web dashboard
     * open "LMA" folder 
     * run job "Deploy Prometheus in Application Account"
-    * select eks or kops base on previously deployed cluster
+    * select eks or kops depending on previously deployed cluster

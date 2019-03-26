@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Bump Requirements for template to 0.4.0
-- Update Documentation for template 0.4.0
+- Bump Requirements for template to 0.4.1
+- Update Documentation for template 0.4.1
 
 ## [0.3.0] - 2019-03-08 
 ### Added
