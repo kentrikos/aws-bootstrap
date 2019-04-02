@@ -7,7 +7,8 @@ _Two flavors are offered:_
 * EKS  
 * KOPS
 
-<br>
+<br>  
+
 **EKS** is a kubernetes cluster where the 'management masters' are completly managed and operated by AWS.  
   
 **KOPS** is a kubernetes cluster where all master and worker nodes are under your control and administration.
