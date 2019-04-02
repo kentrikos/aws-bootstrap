@@ -3,7 +3,7 @@
 ## Prerequirements (*very* specific for EKS):
 * Both accounts need to adhere to the 'organizations' account structure
 * a transit VPC with three AZ's (and three private subnets) in transit (3 is recommended, 1 is bare minimum)
-* an advanced VPC with six AZ's; with six subnets: 3x privat and 3x public (3 is bare minimum)
+* an advanced VPC with six AZ's; with six subnets: 3x private and 3x public (3 is bare minimum)
 * Each subnet needs at least to be a /26 
 * an accessible and functional proxy in the transit account to provide internet access
 * Access to a PRIVATE repository system (e.g. ATC Bitbucket) to host your own environment-configuration specific for your environment
