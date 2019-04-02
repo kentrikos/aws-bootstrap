@@ -16,7 +16,7 @@ Both solutions offer the same compute power for your app on the workernodes.  EK
 
 Please follow one of the following instruction to set up your environment:  
 
-####For EKS:    https://github.com/kentrikos/aws-bootstrap/blob/master/docs/EKS_README.md  
+### For EKS:    https://github.com/kentrikos/aws-bootstrap/blob/master/docs/EKS_README.md  
 
-####For KOPS:   https://github.com/kentrikos/aws-bootstrap/blob/master/docs/KOPS_README.md  
+### For KOPS:   https://github.com/kentrikos/aws-bootstrap/blob/master/docs/KOPS_README.md  
 
