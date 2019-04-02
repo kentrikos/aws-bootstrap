@@ -53,7 +53,7 @@ http\_proxy\_port = 8080
 > proxy port for your environment
 
 <br></br>
-no\_proxy = "localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.elb.us-east-1.amazonaws.com,.elb.amazonaws.com,169.254.169.254,.internal,.local,.aws.cloud.bmw"
+no\_proxy = "localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.elb.us-east-1.amazonaws.com,.elb.amazonaws.com,169.254.169.254,.internal,.local"
 > Destinations bypassing the Proxy
 
 <br></br>
@@ -84,7 +84,7 @@ jenkins\_ec2\_instance\_type = "t3.medium"
 > Instance type Jenkins will be running on
 
 <br></br>
-jenkins\_dns\_domain\_hosted\_zone\_ID = "Route53 hosted zone ID]"  
+jenkins\_dns\_domain\_hosted\_zone\_ID = "[Route53 hosted zone ID]"  
 > Your route53 hosted zone ID to create an ALIAS to reach your Jenkins installation on
 
 <br></br>

@@ -13,7 +13,7 @@
 
 * There are limited amount of IP's available in Transit accounts.  This may affect the creation/scaling of cluster, loadbalancers etc.  Therefore limited amount of infrastructure should be deployed in transit, with minimal resource reservations (e.g. when creating an EKS cluster with m4.large instances, some 18 IP addresses per instance are automatically reserved).  If there is an IP shortage, your cluster may not come on-line or will not scale up.).
 * Each EKS cluster takes about 12 minutes to build in either account.  This is an Amazon restriction.  Please keep that in mind when starting a build.
-* AWS resources are currently unable to resolve ATC bitbucket servers by name, please use xxx instead of yyy
+* AWS resources are currently unable to resolve on-prem repo servers by name, please use IP addresses instead.
 
 
 ## Lets get started:  
