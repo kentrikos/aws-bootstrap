@@ -6,7 +6,7 @@
 * an advanced VPC with six AZ's; with six subnets: 3x private and 3x public (3 is bare minimum)
 * Each subnet needs at least to be a /26 
 * an accessible and functional proxy in the transit account to provide internet access
-* Access to a PRIVATE repository system (e.g. ATC Bitbucket) to host your own environment-configuration specific for your environment
+* Access to a PRIVATE repository system to host your own environment-configuration specific for your environment
 
 
 ## Known Limitations:  
