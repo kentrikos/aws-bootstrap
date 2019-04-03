@@ -37,7 +37,7 @@
 
 3. Go to the cloned template-environment-configuration repository and perform the following tasks:  
 
-	* for both application and operation, create your own 'region' (e.g. us-east-1).  
+	* for both application and operation, create your own 'region' folder (e.g. us-east-1).  
 
 		> If eu-central-1 is your region, then skip the copy part and modify the provided files.  
 
@@ -50,8 +50,8 @@
 		* operations/$REGION/env-eks/grafana/parameters.yaml (config for grafana installation)
 
 4. Login to your private Bitbucket
-5. create a new repo (and copy the URL to this repo)
-6. upload the template-environment-configuration to your new Bitbucket repo, making sure the folder structure stays intact.
+5. Create a new repo (and copy the URL to this repo)
+6. Upload the template-environment-configuration to your new Bitbucket repo, making sure the folder structure stays intact.
     > NOTE: As this repo now contains sensitive information please make sure that it is PRIVATE
 7. Create an SSH keypair on your local machine
 8. Upload the private ssh key to the repo: This will allow the deployment to pull this repo allowing it to build your infrastructure
@@ -73,7 +73,7 @@
     Now resources will be created on behalve of you.  When clicking 'refresh' you can stay informed of the progress.  When the process is successfully completed, you will have:
 	* 'crossaccount role' in application account (OK: nothing much to show for here, as this account is created in the back ground)
 20. Retrieve the Jenkins URL from step 14, and login to jenkins.  
-21. Modify SSH key (imported from step zzz) to include a carriage return at the very end of the certificate 
+21. Modify SSH key (imported from step 7) to include a carriage return at the very end of the certificate 
     > (known issue: <https://github.com/jenkinsci/ssh-credentials-plugin/pull/33>)
 22. Browse to the 'Infrastructure" map and build "Install EKS in Application account".  Wait for successful completion.
 23. In this same folder, build "Install EKS in Operations account".  Wait for successful completion.
@@ -81,5 +81,5 @@
 ### Your EKS clusters are now ready for use.
 
 #####Next steps:
-deploy Grafana/Prometheus for monitoring purposes.  You can find documentation here.
+Deploy Grafana/Prometheus for monitoring purposes.
 
