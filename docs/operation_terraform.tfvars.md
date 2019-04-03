@@ -18,8 +18,8 @@ auto\_IAM\_path = "/"
 > needed for backwards compatibility with KOPS.
 
 <br></br>
-logs\_not\_resource = ["arn:aws:logs:*:*:ccc-*"]
-> do not change this
+logs\_not\_resource = [""]
+> please do not change this, unless you know your stuff
 
 <br></br>
 environment\_type = "dev"
@@ -58,9 +58,7 @@ no\_proxy = "localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.elb.us
 
 <br></br>
 jenkins\_config\_repo\_url = "[your git repo]"  
-> The URL to your cloned private repo for the environment;  
-> e.g.: ssh:/git@git.bmwgroup.net:7999/[q#]/[git repo name].git;  
-> bmwgroup.net may need to be substitutes by xxx.xxx.xxx.xxx. 
+> The URL to your cloned private repo for the environment   
 
 <br></br>
 jenkins\_iam\_policy\_names\_prefix = "/"
