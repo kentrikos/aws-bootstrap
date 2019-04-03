@@ -19,12 +19,12 @@ auto\_IAM\_path = "/"
 
 <br></br>
 logs\_not\_resource = ["arn:aws:logs:*:*:ccc-*"]
-> do not change this
+> please do not change this, unless you know your stuff
 
 <br></br>
 environment\_type = "dev"
 > reflects the environment [dev,test,int,prod]  
-> used in the name of your infrastructure
+> used to name your infrastructure (and for you to keep track of environments)
 
 <br></br>
 product\_domain\_name = "[Your unique name]"
