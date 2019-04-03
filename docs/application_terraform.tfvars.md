@@ -18,7 +18,7 @@ auto\_IAM\_path = "/"
 > needed for backwards compatibility with KOPS.
 
 <br></br>
-logs\_not\_resource = ["arn:aws:logs:*:*:ccc-*"]
+logs\_not\_resource = [""]
 > please do not change this, unless you know your stuff
 
 
