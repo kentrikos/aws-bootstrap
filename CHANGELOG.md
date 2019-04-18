@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+## Added
+- IAM policies to allow update/delete for ElasticSearch domain
+- IAM policies to create/delete Service Linked Roles
+
+## [0.4.0]
 ### Changed
 - Bump Requirements for template to 0.4.1
 - Update Documentation for template 0.4.1
