@@ -2,6 +2,7 @@
 
 This repo serves as the entry-point for Kentrikos and to create a enterprise Cloud Hub environment with Kubernetes cluster(s) in the AWS cloud.  It contains all needed instructions to setup an automated environment where you can deploy your application in a Kubernetes cluster.
 
+![Architecture](images/Kentrikos.png)
 
 _Two flavors are offered:_  
 * EKS  
