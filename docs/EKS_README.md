@@ -61,7 +61,7 @@
 12. Click OK / Next 
     > Recommended: Add a tag named "RunTill" with a value in format YYYY-MM-DD (This allows the EC2 resource to run uninterupted by cleanup-bots till the set date)
 13. Acknowledge that additional AWS resources are created and click OK
-14. Now resources will be created on behalve of you.  When clicking 'refresh' you can stay informed of the progress.  When the process is successfully completed, you will have:
+14. Now resources will be created on behalf of you.  By clicking 'refresh' in the CloudFormation console you can stay informed of the progress.  When the process is successfully completed, you will have:
 	* running bastion ec2 instance. 
 	* running jenkins ec2 instance (may take up to 5 minutes to appear in the EC2 list, after the bastion host is created)
 	* URL to jenkins instance (running on port 80)
