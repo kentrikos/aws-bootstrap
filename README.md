@@ -6,7 +6,7 @@ This repo serves as the entry-point for Kentrikos and to create a enterprise Clo
 
 _Two flavors are offered:_  
 * EKS  
-* KOPS
+* KOPS (Warning, currently Work in Progress)
 
 <br>  
 
@@ -20,4 +20,4 @@ Please follow one of the following instruction to set up your environment:
 
 #### For EKS:    https://github.com/kentrikos/aws-bootstrap/blob/master/docs/EKS_README.md  
 
-#### For KOPS:   https://github.com/kentrikos/aws-bootstrap/blob/master/docs/KOPS_README.md
+#### For KOPS (WIP):   https://github.com/kentrikos/aws-bootstrap/blob/master/docs/KOPS_README.md
