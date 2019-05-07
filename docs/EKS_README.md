@@ -64,7 +64,7 @@
 14. Now resources will be created on behalf of you.  By clicking 'refresh' in the CloudFormation console you can stay informed of the progress.  When the process is successfully completed, you will have:
 	* running bastion ec2 instance. 
 	* running jenkins ec2 instance (may take up to 5 minutes to appear in the EC2 list, after the bastion host is created)
-	* URL to jenkins instance (running on port 80)
+	* URL to jenkins instance (running on port 8080)
 15. In the same browser, switch to the Advanced account
 16. Create a new stack and choose to upload a template. Click on the "Choose File" button and brwose to the cloned aws-bootstrap on your local machine.  Navigate to: ~/test/aws-bootstrap/cfn/application-account
 17. Fill out the questions to fit your infrastructure
