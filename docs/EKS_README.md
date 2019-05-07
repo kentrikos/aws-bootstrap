@@ -53,8 +53,8 @@
 5. Create a new repo (and copy the URL to this repo)
 6. Upload the template-environment-configuration to your new Bitbucket repo, making sure the folder structure stays intact.
     > NOTE: As this repo now contains sensitive information please make sure that it is PRIVATE
-7. Create an SSH keypair on your local machine
-8. Upload the public ssh key to the new repo (containing template-environment-configuration): This will allow the deployment to pull this repo allowing it to build your infrastructure
+7. Create an SSH keypair (public/private) on your local machine `ssh-keygen -t rsa -b 4096`
+8. Upload your newly created public ssh key to the new repo (containing template-environment-configuration): This will allow the deployment to pull this repo allowing it to build your infrastructure
 9. Open a browser, log into your transit AWS account and go to CloudFormation
 10. Create a new stack and choose to upload a template.  Click on the "Choose File" button and brwose to the cloned aws-bootstrap on your local machine.  Navigate to: ~/test/aws-bootstrap/cfn/operations-account
 11. Fill out the questions to fit your infrastructure
