@@ -53,18 +53,18 @@
 5. Create a new repo (and copy the URL to this repo)
 6. Upload the template-environment-configuration to your new Bitbucket repo, making sure the folder structure stays intact.
     > NOTE: As this repo now contains sensitive information please make sure that it is PRIVATE
-7. Create an SSH keypair on your local machine
-8. Upload the private ssh key to the repo: This will allow the deployment to pull this repo allowing it to build your infrastructure
+7. Create an SSH keypair (public/private) on your local machine `ssh-keygen -t rsa -b 4096`
+8. Add your newly created public ssh key to the access configuration of your private configuration repository: this will allow the deployment to pull this repo allowing it to build your infrastructure.
 9. Open a browser, log into your transit AWS account and go to CloudFormation
 10. Create a new stack and choose to upload a template.  Click on the "Choose File" button and brwose to the cloned aws-bootstrap on your local machine.  Navigate to: ~/test/aws-bootstrap/cfn/operations-account
 11. Fill out the questions to fit your infrastructure
 12. Click OK / Next 
     > Recommended: Add a tag named "RunTill" with a value in format YYYY-MM-DD (This allows the EC2 resource to run uninterupted by cleanup-bots till the set date)
 13. Acknowledge that additional AWS resources are created and click OK
-14. Now resources will be created on behalve of you.  When clicking 'refresh' you can stay informed of the progress.  When the process is successfully completed, you will have:
+14. Now resources will be created on behalf of you.  By clicking 'refresh' in the CloudFormation console you can stay informed of the progress.  When the process is successfully completed, you will have:
 	* running bastion ec2 instance. 
 	* running jenkins ec2 instance (may take up to 5 minutes to appear in the EC2 list, after the bastion host is created)
-	* URL to jenkins instance (running on port 8080) and credentials required to log into web UI (all printed as outputs by terraform)
+  * URL to jenkins instance (running on port 8080) and credentials required to log into web UI (all printed as outputs by terraform)
 15. In the same browser, switch to the Advanced account
 16. Create a new stack and choose to upload a template. Click on the "Choose File" button and brwose to the cloned aws-bootstrap on your local machine.  Navigate to: ~/test/aws-bootstrap/cfn/application-account
 17. Fill out the questions to fit your infrastructure
