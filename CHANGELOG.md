@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+## [0.4.1] - 2019-05-08 
 ### Changed
 - Bump Requirements for template to 0.6.2
 - Update Documentation for template 0.6.2
