@@ -70,7 +70,7 @@
 17. Fill out the questions to fit your infrastructure
 18. Click OK / Next (no tags or other info is needed)
 19. Acknowledge that additional resources are created and click OK
-    Now resources will be created on behalve of you.  When clicking 'refresh' you can stay informed of the progress.  When the process is successfully completed, you will have:
+    Now resources will be created on behalf of you.  When clicking 'refresh' you can stay informed of the progress.  When the process is successfully completed, you will have:
 	* 'crossaccount role' in application account (OK: nothing much to show for here, as this account is created in the back ground)
 20. Retrieve the Jenkins URL from step 14, and login to jenkins.  
 21. Modify SSH key (imported from step 7) to include a carriage return at the very end of the certificate 
