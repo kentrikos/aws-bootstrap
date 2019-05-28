@@ -4,7 +4,14 @@ Update guide notes for Kentrikos deployments.
 
 ## Steps
 
-1. Check diff between your current version of config repo and template [repo](https://github.com/jenkinsci/ssh-credentials-plugin/pull/33)
+0. Check diff between your current version of [Kentrikos](https://github.com/kentrikos/aws-bootstrap) and desired 
+
+    ````
+    https://github.com/kentrikos/aws-bootstrap/compare/<YOUR VERSION>...<NEW VERSION>
+    ````
+
+    <https://github.com/kentrikos/aws-bootstrap/compare/0.3.0...0.4.1>
+1. Check diff between your current version of config repo and template [repo](https://github.com/kentrikos/template-environment-configuration)
 
     ````
     https://github.com/kentrikos/template-environment-configuration/compare/<YOUR VERSION>...<NEW VERSION>
@@ -15,12 +22,21 @@ Update guide notes for Kentrikos deployments.
 3. Update existed .tf files
 4. Update values in .tfvars files
 5. Commit all updates and push to config repo
-6. (OPTIONAL) If CloudFormation for operations account was changed, deploy it (AWS Console or aws cli)
-7. (OPTIONAL) If CloudFormation for application account was changed, deploy it (AWS Console or aws cli)
+6. (OPTIONAL) If CloudFormation for operations account was changed, deploy it ([steps](#cfn-update) )
+7. (OPTIONAL) If CloudFormation for application account was changed, deploy it([steps](#cfn-update) )
 8. (OPTIONAL) If jenkins-core-infra was updated, deploy it ([steps](#jenkins-core-infra-update) )
 9. (OPTIONAL) If operations folder was updated, deploy changes ([steps](#operations-update) )
 
 ## Updating procedures
+
+### <a name="cfn-update"></a> CloudFormation update
+
+1. Go to AWS Console to CloudFormation on your account and region
+2. Select your stack and update select update 
+3. Chose `Upload a template to Amazon S3` and select proper stack file from https://github.com/kentrikos/aws-bootstrap/cfn for your version
+4. Update params if needed
+5. Review changes before deployment
+6. If Bastion Host is marked to recreate it means that during bootstrap will perform terraform update for jenkins master automatically. Prepare config repo before so [Jenkins core infra update](#jenkins-core-infra-update) could be skipped as will be performed automatically 
 
 ### <a name="jenkins-core-infra-update"></a> Jenkins core infra update
 
