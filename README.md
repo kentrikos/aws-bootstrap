@@ -10,11 +10,11 @@ _Two flavors are offered:_
 
 <br>  
 
-**EKS** is a kubernetes cluster where the Control Plane are completly managed and operated by AWS (Only the worker nodes need to be managed).  
+**EKS** is a kubernetes cluster where the Control Plane are completely managed and operated by AWS (Only the worker nodes need to be managed).  
   
 **KOPS** is a kubernetes cluster where all master and worker nodes are under your control and administration.
 
-Both solutions offer the same compute power for your app on the workernodes.  EKS will take the operational part of your master nodes out of your hands.
+Both solutions offer the same compute power for your app on the worker nodes.  EKS will take the operational part of your master nodes out of your hands.
 
 Please follow one of the following instruction to set up your environment:  
 
