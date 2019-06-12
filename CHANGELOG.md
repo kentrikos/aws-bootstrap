@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Added
+- Permissions for managing cloudformation and events
 
 ## [0.5.0] - 2019-05-22
 ### Added
