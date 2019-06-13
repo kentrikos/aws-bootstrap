@@ -259,7 +259,21 @@ Resources:
               - sns:ListPlatformApplications
               - sns:GetSMSAttributes
             Resource: "*"
-
+          -
+            Sid: LAMBDA
+            Effect: Allow
+            Action: lambda:*
+            Resource: "*"
+          -
+            Sid: CLOUDFORMATIN
+            Effect: Allow
+            Action: cloudformation:*
+            Resource: "*"
+          -
+            Sid: EVENTS
+            Effect: Allow
+            Action: events:*
+            Resource: "*"
   IAMManagedPolicyKentrikosDynamoDB:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
