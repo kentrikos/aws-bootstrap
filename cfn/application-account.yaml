@@ -265,7 +265,7 @@ Resources:
             Action: lambda:*
             Resource: "*"
           -
-            Sid: CLOUDFORMATIN
+            Sid: CLOUDFORMATION
             Effect: Allow
             Action: cloudformation:*
             Resource: "*"
