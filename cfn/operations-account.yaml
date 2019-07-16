@@ -833,6 +833,7 @@ Resources:
               - ec2:ModifyVpcAttribute
               - ec2:DeleteVpc
               - ec2:CreateSubnet
+              - ec2:*VpcEndpoint*
             Resource: "*"
 ##############################################################################
 
