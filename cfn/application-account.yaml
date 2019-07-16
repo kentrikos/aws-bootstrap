@@ -500,6 +500,7 @@ Resources:
               - iam:CreatePolicyVersion
               - iam:DeletePolicyVersion
               - iam:ListPolicyVersions
+              - iam:TagRole
             Resource: "*"
 
   IAMManagedPolicyKentrikosS3:
