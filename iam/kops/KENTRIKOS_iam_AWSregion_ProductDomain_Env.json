@@ -30,6 +30,9 @@
                 "iam:ListInstanceProfilesForRole",
                 "iam:RemoveRoleFromInstanceProfile",
                 "iam:ListPolicyVersions",
+                "iam:CreateServiceLinkedRole",
+                "iam:DeleteServiceLinkedRole",
+                "iam:GetServiceLinkedRoleDeletionStatus",
                 "iam:TagRole"
             ],
             "NotResource":[

@@ -258,7 +258,7 @@ Resources:
           yum update -y
           yum  -y install git jq aws-cfn-bootstrap
           #TERRAFORM_VERSION=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d '"' -f 4|cut -c 2-)
-          TERRAFORM_VERSION=0.12.3
+          TERRAFORM_VERSION=0.12.5
           TERRAFORM_DOWNLOAD_URL="https://releases.hashicorp.com/terraform/${!TERRAFORM_VERSION}/terraform_${!TERRAFORM_VERSION}_linux_amd64.zip"
           wget --quiet  "${!TERRAFORM_DOWNLOAD_URL}" -O terraform.zip
           unzip terraform.zip
@@ -485,6 +485,8 @@ Resources:
             Action:
               - es:CreateElasticsearchDomain
               - es:DescribeElasticsearchDomain
+              - es:DeleteElasticsearchDomain
+              - es:UpdateElasticsearchDomainConfig
               - es:AddTags
               - es:ListTags
             Resource: "*"
@@ -737,6 +739,9 @@ Resources:
               - iam:CreatePolicyVersion
               - iam:DeletePolicyVersion
               - iam:ListPolicyVersions
+              - iam:CreateServiceLinkedRole
+              - iam:DeleteServiceLinkedRole
+              - iam:GetServiceLinkedRoleDeletionStatus
               - iam:TagRole
             Resource: "*"
 
