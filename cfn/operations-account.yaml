@@ -500,7 +500,16 @@ Resources:
             Effect: Allow
             Action: lambda:*
             Resource: "*"
-
+          -
+            Sid: CLOUDFORMATION
+            Effect: Allow
+            Action: cloudformation:*
+            Resource: "*"
+          -
+            Sid: EVENTS
+            Effect: Allow
+            Action: events:*
+            Resource: "*"
 
   IAMManagedPolicyKentrikosDynamoDB:
     Condition: IsAutoIAMMode
