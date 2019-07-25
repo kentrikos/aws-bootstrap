@@ -177,7 +177,7 @@ Resources:
             Action:
               - sts:AssumeRole
       ManagedPolicyArns:
-        - !Ref IAMManagedPolicyKentrikosAutoScalingELB
+        - !Ref IAMManagedPolicyKentrikosAutoScalingELBEKS
         - !Ref IAMManagedPolicyKentrikosLMA
         - !Ref IAMManagedPolicyKentrikosDynamoDB
         - !Ref IAMManagedPolicyKentrikosEC2
@@ -202,7 +202,7 @@ Resources:
             Action:
               - sts:AssumeRole
       ManagedPolicyArns:
-        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_autoscaling_elb"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_autoscaling_elb_eks"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_lma"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_dynamodb"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_ec2"
@@ -257,7 +257,8 @@ Resources:
 
           yum update -y
           yum  -y install git jq aws-cfn-bootstrap
-          TERRAFORM_VERSION=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d '"' -f 4|cut -c 2-)
+          #TERRAFORM_VERSION=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d '"' -f 4|cut -c 2-)
+          TERRAFORM_VERSION=0.11.11
           TERRAFORM_DOWNLOAD_URL="https://releases.hashicorp.com/terraform/${!TERRAFORM_VERSION}/terraform_${!TERRAFORM_VERSION}_linux_amd64.zip"
           wget --quiet  "${!TERRAFORM_DOWNLOAD_URL}" -O terraform.zip
           unzip terraform.zip
@@ -372,11 +373,11 @@ Resources:
 # (optional, requires appropriate IAM permisions when deploying this template)
 ##############################################################################
 
-  IAMManagedPolicyKentrikosAutoScalingELB:
+  IAMManagedPolicyKentrikosAutoScalingELBEKS:
     Condition: IsAutoIAMMode
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: !Sub  "KENTRIKOS_autoscaling_elb_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
+      ManagedPolicyName: !Sub  "KENTRIKOS_autoscaling_elb_eks_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
       Path: !Ref IAMNewManagedPoliciesPath
       PolicyDocument:
         Version: "2012-10-17"
@@ -393,6 +394,12 @@ Resources:
             Action:
               - elasticloadbalancing:*
             Resource: "*"
+          -
+            Sid: eks
+            Effect: Allow
+            Action:
+              - eks:*
+            Resource: "arn:aws:eks:*:*:cluster/*"
 
   IAMManagedPolicyKentrikosLMA:
     Condition: IsAutoIAMMode
@@ -478,6 +485,8 @@ Resources:
             Action:
               - es:CreateElasticsearchDomain
               - es:DescribeElasticsearchDomain
+              - es:DeleteElasticsearchDomain
+              - es:UpdateElasticsearchDomainConfig
               - es:AddTags
               - es:ListTags
             Resource: "*"
@@ -491,7 +500,16 @@ Resources:
             Effect: Allow
             Action: lambda:*
             Resource: "*"
-
+          -
+            Sid: CLOUDFORMATION
+            Effect: Allow
+            Action: cloudformation:*
+            Resource: "*"
+          -
+            Sid: EVENTS
+            Effect: Allow
+            Action: events:*
+            Resource: "*"
 
   IAMManagedPolicyKentrikosDynamoDB:
     Condition: IsAutoIAMMode
@@ -721,6 +739,9 @@ Resources:
               - iam:CreatePolicyVersion
               - iam:DeletePolicyVersion
               - iam:ListPolicyVersions
+              - iam:CreateServiceLinkedRole
+              - iam:DeleteServiceLinkedRole
+              - iam:GetServiceLinkedRoleDeletionStatus
             Resource: "*"
 
   IAMManagedPolicyKentrikosS3:
@@ -821,6 +842,7 @@ Resources:
               - ec2:ModifyVpcAttribute
               - ec2:DeleteVpc
               - ec2:CreateSubnet
+              - ec2:*VpcEndpoint*
             Resource: "*"
 ##############################################################################
 
