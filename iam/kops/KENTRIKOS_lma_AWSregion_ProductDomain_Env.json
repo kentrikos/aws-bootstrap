@@ -100,6 +100,8 @@
             "Action": [
                 "es:CreateElasticsearchDomain",
                 "es:DescribeElasticsearchDomain",
+                "es:DeleteElasticsearchDomain",
+                "es:UpdateElasticsearchDomainConfig",
                 "es:AddTags",
                 "es:ListTags"
             ],
