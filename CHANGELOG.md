@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Permissions for managing CloudFormation and events
+### Changed
+- Update troubleshooting doc with HTTP proxy related information
 
 ## [0.5.1] - 2019-07-16
 ### Added
@@ -39,3 +41,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Documentation about versioning
 - This CHANGELOG file
+
+
