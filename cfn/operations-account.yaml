@@ -485,6 +485,8 @@ Resources:
             Action:
               - es:CreateElasticsearchDomain
               - es:DescribeElasticsearchDomain
+              - es:DeleteElasticsearchDomain
+              - es:UpdateElasticsearchDomainConfig
               - es:AddTags
               - es:ListTags
             Resource: "*"
@@ -737,6 +739,9 @@ Resources:
               - iam:CreatePolicyVersion
               - iam:DeletePolicyVersion
               - iam:ListPolicyVersions
+              - iam:CreateServiceLinkedRole
+              - iam:DeleteServiceLinkedRole
+              - iam:GetServiceLinkedRoleDeletionStatus
             Resource: "*"
 
   IAMManagedPolicyKentrikosS3:
