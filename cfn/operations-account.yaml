@@ -226,13 +226,13 @@ Parameters:
       - true
       - false
     IAMExistingManagedPoliciesPath:
-      Type: String
-      Description: Optional path for existing IAM Managed policies that will be attached to the BH, must contain trailing "/" (requires AutoIAMMode to be false), leave "/" if unsure
-      Default: /
+        Type: String
+        Description: Optional path for existing IAM Managed policies that will be attached to the BH, must contain trailing "/" (requires AutoIAMMode to be false), leave "/" if unsure
+        Default: /
     IAMNewManagedPoliciesPath:
-      Type: String
-      Description: Optional path for new IAM Managed policies that will be attached to the BH (requires AutoIAMMode to be true), leave "/" if unsure
-      Default: "/"
+        Type: String
+        Description: Optional path for new IAM Managed policies that will be attached to the BH (requires AutoIAMMode to be true), leave "/" if unsure
+        Default: "/"
     AutoDeployCoreInfraJenkins:
       Description: After deploying Terraform BH, automatically deploy core-infra Jenkins via UserData (run manually via ssh otherwise)
       Type: String
@@ -250,12 +250,12 @@ Parameters:
 
 
 Conditions:
-    IsAutoIAMMode:
-      !Equals [true, !Ref AutoIAMMode]
-    IsNotAutoIAMMode:
-      !Equals [false, !Ref AutoIAMMode]
-    IsDevTestEnableAllResources:
-      !Equals [true, !Ref DevTestEnableAllResources]
+  IsAutoIAMMode:
+    !Equals [true, !Ref AutoIAMMode]
+  IsNotAutoIAMMode:
+    !Equals [false, !Ref AutoIAMMode]
+  IsDevTestEnableAllResources:
+    !Equals [true, !Ref DevTestEnableAllResources]
 
 
 Resources:
