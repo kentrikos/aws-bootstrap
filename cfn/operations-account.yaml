@@ -5,21 +5,40 @@ Metadata:
     ParameterGroups:
     -
       Label:
-        default: "Top-level environment configuration"
+        default: "Kentrikos Top-level environment configuration"
       Parameters:
       - ProductDomainName
       - EnvironmentType
+      - ApplicationAWSAccountNumber
     -
       Label:
-        default: "AWS Configuration for Terraform Bastion Host (BH)"
+        default: "Network Configuration for Operations Account"
       Parameters:
       - VpcID
-      - SubnetID
-      - InstanceType
-      - KeyName
-      - SSHLocation
-      - LatestAmiId
+      - Subnets
+      - AZs
     -
+      Label:
+        default: "Generic Configuration for Terraform Bastion Host (BH)"
+      Parameters:
+      - BastionSubnetID
+      - BastionInstanceType
+      - BastionKeyName
+      - BastionSSHLocation
+      - BastionLatestAmiId
+    -
+      Label:
+        default: "Generic Configuration for Core Infra Jenkins"
+      Parameters:
+      - JenkinsSubnetID
+      - JenkinsInstanceType
+      - JenkinsSSHLocation
+      - JenkinsHTTPLocation
+      - JenkinsLatestAmiId
+      - JenkinsHostedZoneId
+      - JenkinsDNSHostName
+      - JenkinsDefaultPassword
+    -    
       Label:
         default: "BitBucket configuration"
       Parameters:
@@ -27,7 +46,7 @@ Metadata:
       - RepoURL
     -
       Label:
-        default: "Proxy configuration"
+        default: "Network Proxy configuration"
       Parameters:
       - HttpProxyParam
       - HttpsProxyParam
@@ -48,15 +67,31 @@ Parameters:
         Description: Name of product domain (will be used as basis for other names)
         Type: String
         Default: demo
+        MinLength: 1
+        MaxLength: 13
+        AllowedPattern:  "[a-z][a-z0-9]*"
+        ConstraintDescription: Product Domain cannot be longer than 13 character, only lowercase and trailing digits allowed.
     EnvironmentType:
         Description: Type of environment (e.g. dev, test, prod)
         Type: String
         Default: test
-    KeyName:
-        Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+        AllowedValues:
+        - test
+        - dev
+        - int
+        - e2e
+        - prod
+    ApplicationAWSAccountNumber:
+        Description: Account Id of the Applications Account
+        Type: String
+        MinLength: 12
+        MaxLength: 12
+        AllowedPattern:  "[0-9]*"
+    BastionKeyName:
+        Description: Name of an existing EC2 KeyPair to enable SSH access to the Bastion host instance
         Type: AWS::EC2::KeyPair::KeyName
         ConstraintDescription: must be the name of an existing EC2 KeyPair.
-    InstanceType:
+    BastionInstanceType:
         Description: Bastion Host EC2 instance type
         Type: String
         Default: t2.small
@@ -66,6 +101,20 @@ Parameters:
         - t2.small
         - t2.medium
         - t2.large
+        - t3.medium
+        - m3.medium
+        ConstraintDescription: must be a valid EC2 instance type.
+    JenkinsInstanceType:
+        Description: Bastion Host EC2 instance type
+        Type: String
+        Default: t3.medium
+        AllowedValues:
+        - t2.nano
+        - t2.micro
+        - t2.small
+        - t2.medium
+        - t2.large
+        - t3.medium
         - m3.medium
         - m3.large
         - m3.xlarge
@@ -85,14 +134,28 @@ Parameters:
         - r3.2xlarge
         - r3.4xlarge
         - r3.8xlarge
-        ConstraintDescription: must be a valid EC2 instance type.
     VpcID:
-      Type: AWS::EC2::VPC::Id
-      Description: VPC in which BH will be deployed
-    SubnetID:
-      Type: AWS::EC2::Subnet::Id
-      Description: Subnet in which BH will be deployed
-    SSHLocation:
+        Type: AWS::EC2::VPC::Id
+        Description: VPC in which Kentrikos will be deployed
+    Subnets:
+        Type: List<AWS::EC2::Subnet::Id>
+        Description: The list of SubnetIds in your Virtual Private Cloud (VPC)
+        ConstraintDescription: >-
+          must be a list of at one or three existing subnets associated with at least
+          one or three availability zones. They should be residing in the selected
+          Virtual Private Cloud.
+    AZs:
+        Type: List<AWS::EC2::AvailabilityZone::Name>
+        Description: List of AvailabilityZones
+    BastionSubnetID:
+        Type: AWS::EC2::Subnet::Id
+        Description: >-
+          Subnet in which Bastion host will be deployed.
+          Must be in the same VPC as entered in the Network setup
+    JenkinsSubnetID:
+        Type: AWS::EC2::Subnet::Id
+        Description: Subnet in which Core Infra Jenkins will be deployed
+    BastionSSHLocation:
         Description: The IP address range (CIDR) that will be allowed to SSH to the EC2 instances (do not set to all hosts e.g. 0.0.0.0/0)
         Type: String
         MinLength: 9
@@ -100,65 +163,99 @@ Parameters:
         Default: 10.0.0.0/8
         AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
         ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
-    LatestAmiId:
+    BastionLatestAmiId:
         Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
         Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
         Description: AMI id for BH (latest Amazon2 by default, should not be changed)
+    JenkinsSSHLocation:
+        Description: The IP address range (CIDR) that will be allowed to SSH to the EC2 instances (do not set to all hosts e.g. 0.0.0.0/0)
+        Type: String
+        MinLength: 9
+        MaxLength: 18
+        Default: 10.0.0.0/8
+        AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
+        ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+    JenkinsHTTPLocation:
+        Description: The IP address range (CIDR) that will be allowed to SSH to the EC2 instances (do not set to all hosts e.g. 0.0.0.0/0)
+        Type: String
+        MinLength: 9
+        MaxLength: 18
+        Default: 10.0.0.0/8
+        AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
+        ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+    JenkinsLatestAmiId:
+        Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+        Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+        Description: AMI id for Jenkins (latest Amazon2 by default, should not be changed)
+    JenkinsHostedZoneId:
+        Description: Private/Public Hosted Zone ID for the Jenkins DNS Hostname
+        Type: AWS::Route53::HostedZone::Id
+    JenkinsDNSHostName:
+        Description: >-
+          <Mandatory> 
+          This parameter is a prefix for wildcard alias that will be created for jenkins.
+          example jenkins and as result will be address - jenkins.myorganization.domain.com (Domain from Hosted Zone)
+        Type: String
+        Default: jenkins
+    JenkinsDefaultPassword:
+        NoEcho: 'true'
+        Description: <Mandatory> - Jenkins Default Password
+        Type: String
     HttpProxyParam:
-      Description: Full string for IP or DNS name of http_proxy parameter (including http:// and optional port)
-      Type: String
+        Description: <Optional> - Full string for IP or DNS name of http_proxy parameter (including http:// and optional port)
+        Type: String
     HttpsProxyParam:
-      Description: Full string for IP or DNS name of https_proxy parameter (including http(s):// and optional port)
-      Type: String
+        Description: <Optional> - Full string for IP or DNS name of https_proxy parameter (including http(s):// and optional port)
+        Type: String
     NoProxyParam:
-      Description: Full string for IP(s) or DNS name(s) of no_proxy parameter (comma separated list, defaults are recommended at minimum. To enable full automation, you have to include domain name you plan to use for JX and the hostname of the git repository, e.g. git-repo.inc.org)
-      Type: String
-      Default: 169.254.169.254,elb.amazonaws.com
+        Description: <Optional> - Full string for IP(s) or DNS name(s) of no_proxy parameter (comma separated list, defaults are recommended at minimum. To enable full automation, you have to include domain name you plan to use for JX and the hostname of the git repository, e.g. git-repo.inc.org)
+        Type: String
+        Default: 169.254.169.254,elb.amazonaws.com
     GitSSHPrivateKey:
-      NoEcho: 'true'
-      Description: Private SSH key to access repositories
-      Type: String
+        NoEcho: 'true'
+        Description: <Mandatory> - Private SSH key to access repositories
+        Type: String
     RepoURL:
-      Description: Full ssh URL to configuration repository (starting with ssh://)
-      Type: String
+        Description: <Mandatory> - Full ssh URL to configuration repository (starting with ssh://)
+        Type: String
     AutoIAMMode:
-      Description: IAM Policies will be created automatically (requires IAM administrative permissions when deploying this template, please pre-create policies manually otherwise)
-      Type: String
-      Default: true
-      AllowedValues:
-      - true
-      - false
+        Description: IAM Policies will be created automatically (requires IAM administrative permissions when deploying this template, please pre-create policies manually otherwise)
+        Type: String
+        Default: true
+        AllowedValues:
+        - true
+        - false
     IAMExistingManagedPoliciesPath:
-        Type: String
-        Description: Optional path for existing IAM Managed policies that will be attached to the BH, must contain trailing "/" (requires AutoIAMMode to be false), leave "/" if unsure
-        Default: /
+          Type: String
+          Description: Optional path for existing IAM Managed policies that will be attached to the BH, must contain trailing "/" (requires AutoIAMMode to be false), leave "/" if unsure
+          Default: /
     IAMNewManagedPoliciesPath:
-        Type: String
-        Description: Optional path for new IAM Managed policies that will be attached to the BH (requires AutoIAMMode to be true), leave "/" if unsure
-        Default: "/"
+          Type: String
+          Description: Optional path for new IAM Managed policies that will be attached to the BH (requires AutoIAMMode to be true), leave "/" if unsure
+          Default: "/"
     AutoDeployCoreInfraJenkins:
-      Description: After deploying Terraform BH, automatically deploy core-infra Jenkins via UserData (run manually via ssh otherwise)
-      Type: String
-      Default: true
-      AllowedValues:
-      - true
-      - false
+        Description: After deploying Terraform BH, automatically deploy core-infra Jenkins via UserData (run manually via ssh otherwise)
+        Type: String
+        Default: true
+        AllowedValues:
+        - true
+        - false
     DevTestEnableAllResources:
-      Description: Dev mode, if false, some central resources (e.g. TF state bucket & table) will not be created to make testing easier, leave true if unsure
-      Type: String
-      Default: true
-      AllowedValues:
-      - true
-      - false
+        Description: Dev mode, if false, some central resources (e.g. TF state bucket & table) will not be created to make testing easier, leave true if unsure
+        Type: String
+        Default: true
+        AllowedValues:
+        - true
+        - false
 
 
 Conditions:
-  IsAutoIAMMode:
-    !Equals [true, !Ref AutoIAMMode]
-  IsNotAutoIAMMode:
-    !Equals [false, !Ref AutoIAMMode]
-  IsDevTestEnableAllResources:
-    !Equals [true, !Ref DevTestEnableAllResources]
+    IsAutoIAMMode:
+      !Equals [true, !Ref AutoIAMMode]
+    IsNotAutoIAMMode:
+      !Equals [false, !Ref AutoIAMMode]
+    IsDevTestEnableAllResources:
+      !Equals [true, !Ref DevTestEnableAllResources]
 
 
 Resources:
@@ -232,11 +329,11 @@ Resources:
               content: !Ref GitSSHPrivateKey
     Properties:
       IamInstanceProfile: !Ref 'BastionInstanceProfile'
-      InstanceType: !Ref 'InstanceType'
-      SecurityGroupIds: [!Ref 'InstanceSecurityGroup']
-      KeyName: !Ref 'KeyName'
-      ImageId: !Ref LatestAmiId
-      SubnetId: !Ref SubnetID
+      InstanceType: !Ref 'BastionInstanceType'
+      SecurityGroupIds: [!Ref 'BastionInstanceSecurityGroup']
+      KeyName: !Ref 'BastionKeyName'
+      ImageId: !Ref BastionLatestAmiId
+      SubnetId: !Ref BastionSubnetID
       Tags:
         -
          Key: "Name"
@@ -308,7 +405,7 @@ Resources:
           ProductDomainName: !Ref ProductDomainName
           EnvironmentType: !Ref EnvironmentType
 
-  InstanceSecurityGroup:
+  BastionInstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       VpcId: !Ref VpcID
@@ -317,7 +414,7 @@ Resources:
       - IpProtocol: tcp
         FromPort: 22
         ToPort: 22
-        CidrIp: !Ref 'SSHLocation'
+        CidrIp: !Ref 'BastionSSHLocation'
 
   TerraformStateBucket:
     Condition: IsDevTestEnableAllResources
