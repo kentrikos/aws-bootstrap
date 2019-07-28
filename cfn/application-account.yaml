@@ -28,14 +28,27 @@ Parameters:
     OperationsAWSAccountNumber:
       Description: Number of Operations AWS account that will be allowed to assume cross-account role
       Type: String
+      MinLength: 12
+      MaxLength: 12
+      AllowedPattern:  "[0-9]*"
     ProductDomainName:
       Description: Name of product domain (will be used as basis for other names)
       Type: String
       Default: demo
+      MinLength: 1
+      MaxLength: 13
+      AllowedPattern:  "[a-z][a-z0-9]*"
+      ConstraintDescription: Product Domain cannot be longer than 13 character, only lowercase and trailing digits allowed.
     EnvironmentType:
       Description: Type of environment (e.g. dev, test, prod)
       Type: String
       Default: test
+      AllowedValues:
+      - test
+      - dev
+      - int
+      - e2e
+      - prod
     AutoIAMMode:
       Description: IAM Policies will be created automatically (requires IAM administrative permissions when deploying this template, please pre-create policies manually otherwise)
       Type: String
