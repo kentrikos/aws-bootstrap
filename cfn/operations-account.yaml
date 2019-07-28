@@ -53,6 +53,13 @@ Metadata:
       - NoProxyParam
     -
       Label:
+        default: "Network Configuration for Application Account"
+      Parameters:
+      - ApplicationVpcID
+      - ApplicationSubnets
+      - ApplicationAZs
+    -
+      Label:
         default: "Automation control switches"
       Parameters:
       - AutoIAMMode
@@ -146,6 +153,19 @@ Parameters:
           Virtual Private Cloud.
     AZs:
         Type: List<AWS::EC2::AvailabilityZone::Name>
+        Description: List of AvailabilityZones
+    ApplicationVpcID:
+        Type: String
+        Description: VPC in which Kentrikos will be deployed
+    ApplicationSubnets:
+        Type: String
+        Description: The list of SubnetIds in your Virtual Private Cloud (VPC)
+        ConstraintDescription: >-
+          must be a list of at one or three existing subnets associated with at least
+          one or three availability zones. They should be residing in the selected
+          Virtual Private Cloud.
+    ApplicationAZs:
+        Type: String
         Description: List of AvailabilityZones
     BastionSubnetID:
         Type: AWS::EC2::Subnet::Id
