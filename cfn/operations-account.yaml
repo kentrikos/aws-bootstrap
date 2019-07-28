@@ -202,51 +202,51 @@ Parameters:
         Description: <Mandatory> - Jenkins Default Password
         Type: String
     HttpProxyParam:
-        Description: <Optional> - Full string for IP or DNS name of http_proxy parameter (including http:// and optional port)
-        Type: String
+      Description: <Optional> - Full string for IP or DNS name of http_proxy parameter (including http:// and optional port)
+      Type: String
     HttpsProxyParam:
-        Description: <Optional> - Full string for IP or DNS name of https_proxy parameter (including http(s):// and optional port)
-        Type: String
+      Description: <Optional> - Full string for IP or DNS name of https_proxy parameter (including http(s):// and optional port)
+      Type: String
     NoProxyParam:
-        Description: <Optional> - Full string for IP(s) or DNS name(s) of no_proxy parameter (comma separated list, defaults are recommended at minimum. To enable full automation, you have to include domain name you plan to use for JX and the hostname of the git repository, e.g. git-repo.inc.org)
-        Type: String
-        Default: 169.254.169.254,elb.amazonaws.com
+      Description: <Optional> - Full string for IP(s) or DNS name(s) of no_proxy parameter (comma separated list, defaults are recommended at minimum. To enable full automation, you have to include domain name you plan to use for JX and the hostname of the git repository, e.g. git-repo.inc.org)
+      Type: String
+      Default: 169.254.169.254,elb.amazonaws.com
     GitSSHPrivateKey:
-        NoEcho: 'true'
-        Description: <Mandatory> - Private SSH key to access repositories
-        Type: String
+      NoEcho: 'true'
+      Description: <Mandatory> - Private SSH key to access repositories
+      Type: String
     RepoURL:
-        Description: <Mandatory> - Full ssh URL to configuration repository (starting with ssh://)
-        Type: String
+      Description: <Mandatory> - Full ssh URL to configuration repository (starting with ssh://)
+      Type: String
     AutoIAMMode:
-        Description: IAM Policies will be created automatically (requires IAM administrative permissions when deploying this template, please pre-create policies manually otherwise)
-        Type: String
-        Default: true
-        AllowedValues:
-        - true
-        - false
+      Description: IAM Policies will be created automatically (requires IAM administrative permissions when deploying this template, please pre-create policies manually otherwise)
+      Type: String
+      Default: true
+      AllowedValues:
+      - true
+      - false
     IAMExistingManagedPoliciesPath:
-          Type: String
-          Description: Optional path for existing IAM Managed policies that will be attached to the BH, must contain trailing "/" (requires AutoIAMMode to be false), leave "/" if unsure
-          Default: /
+      Type: String
+      Description: Optional path for existing IAM Managed policies that will be attached to the BH, must contain trailing "/" (requires AutoIAMMode to be false), leave "/" if unsure
+      Default: /
     IAMNewManagedPoliciesPath:
-          Type: String
-          Description: Optional path for new IAM Managed policies that will be attached to the BH (requires AutoIAMMode to be true), leave "/" if unsure
-          Default: "/"
+      Type: String
+      Description: Optional path for new IAM Managed policies that will be attached to the BH (requires AutoIAMMode to be true), leave "/" if unsure
+      Default: "/"
     AutoDeployCoreInfraJenkins:
-        Description: After deploying Terraform BH, automatically deploy core-infra Jenkins via UserData (run manually via ssh otherwise)
-        Type: String
-        Default: true
-        AllowedValues:
-        - true
-        - false
+      Description: After deploying Terraform BH, automatically deploy core-infra Jenkins via UserData (run manually via ssh otherwise)
+      Type: String
+      Default: true
+      AllowedValues:
+      - true
+      - false
     DevTestEnableAllResources:
-        Description: Dev mode, if false, some central resources (e.g. TF state bucket & table) will not be created to make testing easier, leave true if unsure
-        Type: String
-        Default: true
-        AllowedValues:
-        - true
-        - false
+      Description: Dev mode, if false, some central resources (e.g. TF state bucket & table) will not be created to make testing easier, leave true if unsure
+      Type: String
+      Default: true
+      AllowedValues:
+      - true
+      - false
 
 
 Conditions:
