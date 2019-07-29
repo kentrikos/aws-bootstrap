@@ -77,3 +77,46 @@ Update guide notes for Kentrikos deployments.
 
 1. Check change details to determine jobs needed to be run
 2. Base on [job order](Jenkins-jobs-order.md) run application account jobs
+
+### <a name="eks-update"></a> EKS update
+
+1. Update cluster_version one version up
+2. Deploy terraform
+3. Get nodes and current version
+    ```bash
+    kubectl get nodes
+    ```  
+4. Stop autoscaler
+    ```bash
+     kubectl scale deployments/vertical-scaler-aws-cluster-autoscaler  --replicas=0 -n kube-system
+    ```
+5. In AWS console increase min and desired nodes count to 2x of currect nodes count in ASG - this will deploy new nodes with upgraded version
+6. Wait for nodes to be ready. All should be in Rady state
+    ```bash
+    kubectl get nodes --wait
+    ```
+7. Stop scheduling workload to "old nodes"
+    ```bash
+    K8S_VERSION=<k8s version from step 3>
+    nodes=$(kubectl get nodes -o jsonpath="{.items[?(@.status.nodeInfo.kubeletVersion==\"v$K8S_VERSION\")].metadata.name}")
+    for node in ${nodes[@]}
+    do
+        echo "Tainting $node"
+        kubectl taint nodes $node key=value:NoSchedule
+    done
+    ```
+8. Drain old nodes of old version
+    ```bash
+    K8S_VERSION=<k8s version from step 3>
+    nodes=$(kubectl get nodes -o jsonpath="{.items[?(@.status.nodeInfo.kubeletVersion==\"v$K8S_VERSION\")].metadata.name}")
+    for node in ${nodes[@]}
+    do
+        echo "Draining $node"
+        kubectl drain $node --ignore-daemonsets --delete-local-data
+    done
+    ```
+9. Decrease minimum min number of nodes back to original.
+10. Turn on autoscaler to remove old nodes 
+    ```bash
+    kubectl scale deployments/vertical-scaler-aws-cluster-autoscaler  --replicas=1 -n kube-system
+    ```  
