@@ -18,11 +18,7 @@
 
 ## Lets get started:  
 
-1. Clone Kentrikos aws-bootstrap repository. 
-
-	> This repo contains the cloud formation templates you will run to create you intitial infrastructure
-
-2. Clone Kentrikos template-environment-configuration repository  
+1. Clone Kentrikos template-environment-configuration repository  
 	> This repo needs to be modified and will contain the information needed to build your EKS clusters  
 
 	Sample code:  
@@ -35,7 +31,7 @@
 	git clone https://github.com/kentrikos/template-environment-configuration.git
 	```
 
-3. Go to the cloned template-environment-configuration repository and perform the following tasks:  
+2. Go to the cloned template-environment-configuration repository and perform the following tasks:  
 
 	* for both application and operation, create your own 'region' folder (e.g. us-east-1).  
 
@@ -49,34 +45,34 @@
 		* operations/$REGION/env-eks/jenkins/parameters.yaml (config for Jenkins installation)
 		* operations/$REGION/env-eks/grafana/parameters.yaml (config for grafana installation)
 
-4. Login to your private Bitbucket
-5. Create a new repo (and copy the URL to this repo)
-6. Upload the template-environment-configuration to your new Bitbucket repo, making sure the folder structure stays intact.
+3. Login to your private Bitbucket
+4. Create a new repo (and copy the URL to this repo)
+5. Upload the template-environment-configuration to your new Bitbucket repo, making sure the folder structure stays intact.
     > NOTE: As this repo now contains sensitive information please make sure that it is PRIVATE
-7. Create an SSH keypair (public/private) on your local machine `ssh-keygen -t rsa -b 4096`
-8. Add your newly created public ssh key to the access configuration of your private configuration repository: this will allow the deployment to pull this repo allowing it to build your infrastructure.
-9. Open a browser, log into your transit AWS account and go to CloudFormation
-10. Create a new stack and choose to upload a template.  Click on the "Choose File" button and brwose to the cloned aws-bootstrap on your local machine.  Navigate to: ~/test/aws-bootstrap/cfn/operations-account
-11. Fill out the questions to fit your infrastructure
-12. Click OK / Next 
+6. Create an SSH keypair (public/private) on your local machine `ssh-keygen -t rsa -b 4096`
+7. Add your newly created public ssh key to the access configuration of your private configuration repository: this will allow the deployment to pull this repo allowing it to build your infrastructure.
+8. Open a browser, login to your transit AWS account.
+9. Start the Cloudformation workflow from here: [Launch Stack](https://console.aws.amazon.com/cloudformation/home?#/stacks/new?stackName=kentrikos-ops&templateURL=https://kentrikos.s3.eu-central-1.amazonaws.com/application-account.yaml)
+10. Fill out the questions to fit your infrastructure
+11. Click OK / Next 
     > Recommended: Add a tag named "RunTill" with a value in format YYYY-MM-DD (This allows the EC2 resource to run uninterupted by cleanup-bots till the set date)
-13. Acknowledge that additional AWS resources are created and click OK
-14. Now resources will be created on behalf of you.  By clicking 'refresh' in the CloudFormation console you can stay informed of the progress.  When the process is successfully completed, you will have:
+12. Acknowledge that additional AWS resources are created and click OK
+13. Now resources will be created on behalf of you.  By clicking 'refresh' in the CloudFormation console you can stay informed of the progress.  When the process is successfully completed, you will have:
 	* running bastion ec2 instance. 
 	* running jenkins ec2 instance (may take up to 5 minutes to appear in the EC2 list, after the bastion host is created)
   * URL to jenkins instance (running on port 8080) and credentials required to log into web UI (all printed as outputs by terraform)
-15. In the same browser, switch to the Advanced account
-16. Create a new stack and choose to upload a template. Click on the "Choose File" button and brwose to the cloned aws-bootstrap on your local machine.  Navigate to: ~/test/aws-bootstrap/cfn/application-account
-17. Fill out the questions to fit your infrastructure
-18. Click OK / Next (no tags or other info is needed)
-19. Acknowledge that additional resources are created and click OK
+14. In the same browser, switch to the Advanced account
+15. Create a new stack and choose to upload a template. Click on the "Choose File" button and brwose to the cloned aws-bootstrap on your local machine.  Navigate to: ~/test/aws-bootstrap/cfn/application-account
+16. Fill out the questions to fit your infrastructure
+17. Click OK / Next (no tags or other info is needed)
+18. Acknowledge that additional resources are created and click OK
     Now resources will be created on behalve of you.  When clicking 'refresh' you can stay informed of the progress.  When the process is successfully completed, you will have:
-	* 'crossaccount role' in application account (OK: nothing much to show for here, as this account is created in the back ground)
-20. Retrieve the Jenkins URL from step 14, and login to jenkins.  
-21. Modify SSH key (imported from step 7) to include a carriage return at the very end of the certificate 
+	* 'crossaccount role' in application account (OK: nothing much to show for here, as this account is created in the back ground) 
+19. Retrieve the Jenkins URL from step 14, and login to jenkins.  
+20. Modify SSH key (imported from step 7) to include a carriage return at the very end of the certificate 
     > (known issue: <https://github.com/jenkinsci/ssh-credentials-plugin/pull/33>)
-22. Browse to the 'Infrastructure" map and build "Install EKS in Application account".  Wait for successful completion.
-23. In this same folder, build "Install EKS in Operations account".  Wait for successful completion.
+21. Browse to the 'Infrastructure" map and build "Install EKS in Application account".  Wait for successful completion.
+22. In this same folder, build "Install EKS in Operations account".  Wait for successful completion.
 
 ### Your EKS clusters are now ready for use.
 
