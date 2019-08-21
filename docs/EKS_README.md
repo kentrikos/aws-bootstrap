@@ -52,7 +52,7 @@
 6. Create an SSH keypair (public/private) on your local machine `ssh-keygen -t rsa -b 4096`
 7. Add your newly created public ssh key to the access configuration of your private configuration repository: this will allow the deployment to pull this repo allowing it to build your infrastructure.
 8. Open a browser, login to your transit AWS account.
-9. Start the Cloudformation workflow from here: [Launch Stack](https://console.aws.amazon.com/cloudformation/home?#/stacks/new?stackName=kentrikos-ops&templateURL=https://kentrikos.s3.eu-central-1.amazonaws.com/application-account.yaml)
+9. Start the CloudFormation workflow from here: [Launch Stack](https://console.aws.amazon.com/cloudformation/home?#/stacks/new?stackName=kentrikos-ops&templateURL=https://kentrikos.s3.eu-central-1.amazonaws.com/operations-account.yaml)
 10. Fill out the questions to fit your infrastructure
 11. Click OK / Next 
     > Recommended: Add a tag named "RunTill" with a value in format YYYY-MM-DD (This allows the EC2 resource to run uninterupted by cleanup-bots till the set date)
@@ -62,7 +62,7 @@
 	* running jenkins ec2 instance (may take up to 5 minutes to appear in the EC2 list, after the bastion host is created)
   * URL to jenkins instance (running on port 8080) and credentials required to log into web UI (all printed as outputs by terraform)
 14. In the same browser, switch to the Advanced account
-15. Create a new stack and choose to upload a template. Click on the "Choose File" button and brwose to the cloned aws-bootstrap on your local machine.  Navigate to: ~/test/aws-bootstrap/cfn/application-account
+15. Start the CloudFormation worflow from here: [Launch Stack](https://console.aws.amazon.com/cloudformation/home?#/stacks/new?stackName=kentrikos-ops&templateURL=https://kentrikos.s3.eu-central-1.amazonaws.com/application-account.yaml)
 16. Fill out the questions to fit your infrastructure
 17. Click OK / Next (no tags or other info is needed)
 18. Acknowledge that additional resources are created and click OK
