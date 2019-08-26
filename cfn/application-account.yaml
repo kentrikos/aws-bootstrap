@@ -503,6 +503,7 @@ Resources:
               - iam:CreateServiceLinkedRole
               - iam:DeleteServiceLinkedRole
               - iam:GetServiceLinkedRoleDeletionStatus
+              - iam:TagRole
             Resource: "*"
 
   IAMManagedPolicyKentrikosS3:

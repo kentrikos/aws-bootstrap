@@ -32,7 +32,8 @@
                 "iam:ListPolicyVersions",
                 "iam:CreateServiceLinkedRole",
                 "iam:DeleteServiceLinkedRole",
-                "iam:GetServiceLinkedRoleDeletionStatus"
+                "iam:GetServiceLinkedRoleDeletionStatus",
+                "iam:TagRole"
             ],
             "NotResource":[
             "arn:aws:iam::*:role/ccc-administration/*",

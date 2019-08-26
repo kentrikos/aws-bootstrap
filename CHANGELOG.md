@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Changed
+- Bump Requirements for template to 1.0.0 
+- Terraform upgraded to 0.12 version
+- Documentation enhancement
+
 ### Added
 - Permissions for managing CloudFormation and events
 ### Changed
