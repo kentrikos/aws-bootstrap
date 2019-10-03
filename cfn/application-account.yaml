@@ -131,6 +131,22 @@ Resources:
       BucketName: !Sub 'tf-${AWS::AccountId}-app-${AWS::Region}-${ProductDomainName}-${EnvironmentType}'
       VersioningConfiguration:
         Status: Enabled
+  TerraformStateBucketPolicy:
+    Condition: IsDevTestEnableAllResources
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: "TerraformStateBucket"
+      PolicyDocument:
+        Statement:
+          -
+            Action:
+              - "s3:GetObject"
+            Effect: "Allow"
+            Resource: !Sub  "arn:aws:s3:::${TerraformStateBucket}/*"
+            Principal:
+              AWS:
+                - !Sub 'arn:aws:iam::${OperationsAWSAccountNumber}:root'
 
   TerraformLockTable:
     Condition: IsDevTestEnableAllResources
@@ -150,7 +166,7 @@ Resources:
 
 ##############################################################################
 # IAM Managed Policies
-# (optional, requires appropriate IAM permisions when deploying this template)
+# (optional, requires appropriate IAM permissions when deploying this template)
 ##############################################################################
 
   IAMManagedPolicyKentrikosAutoScalingELBEKS:
