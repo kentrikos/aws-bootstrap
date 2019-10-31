@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.1.0] - 2019-10-25
+## [1.1.0] - 2019-10-31
 ### Changed
-- Bump Requirements for template to 2.0.0 
-  - Upgraded EKS to support up to 1.14 and logs
-  - Added VPCES and VPC Endpoint
-  - Added Dashboard
+- Bump Requirements for template to 2.0.1
+- Upgraded EKS to support up to 1.14 and logs
+- Added VPCES and VPC Endpoint
+- Added Dashboard
 
 ## [1.0.0] - 2019-08-28
 ### Changed
