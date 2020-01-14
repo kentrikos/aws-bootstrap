@@ -448,6 +448,7 @@ Resources:
               - logs:ListTagsLogGroup
               - logs:TagLogGroup
               - logs:UntagLogGroup
+              - logs:PutRetentionPolicy
             Resource: "*"
           -
             Sid: CWLogs3
