@@ -113,3 +113,17 @@ k8s\_allowed\_worker\_ssh\_cidrs = []
 iam\_cross\_account\_role\_arn = "[your cross account arn:]"
 > CrossAccount to be used / created to control Application EKS cluster from Transit accounts  
 > arn:aws:iam::[application account]:role/KENTRIKOS\_[region]\_[domain name]\_[environment]\_CrossAccount
+
+<br></br>
+```
+node_groups = { 
+   example_group_1 = { 
+     desired_capacity = 1 
+     max_capacity     = 10 
+     min_capacity     = 1 
+     disk_size        = "50" 
+     instance_type    = "m4.large"
+   }
+}
+```
+> Manage Node Groups setup
