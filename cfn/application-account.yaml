@@ -93,6 +93,7 @@ Resources:
         - !Ref IAMManagedPolicyKentrikosIAM
         - !Ref IAMManagedPolicyKentrikosS3
         - !Ref IAMManagedPolicyKentrikosVPC
+        - !Ref IAMManagedPolicyKentrikosEKSnodegroup
       RoleName: !Sub 'KENTRIKOS_${AWS::Region}_${ProductDomainName}_${EnvironmentType}_CrossAccount'
       MaxSessionDuration: 7200
 
@@ -485,7 +486,7 @@ Resources:
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-          -
+          -IAMManagedPolicyKentrikosEKSnodegroup
             Sid: IAMIAMFullAccessLimited
             Effect: Allow
             Action:
