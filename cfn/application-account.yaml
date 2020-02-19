@@ -486,7 +486,7 @@ Resources:
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-          -IAMManagedPolicyKentrikosEKSnodegroup
+          -
             Sid: IAMIAMFullAccessLimited
             Effect: Allow
             Action:
