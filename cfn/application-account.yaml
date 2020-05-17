@@ -93,6 +93,7 @@ Resources:
         - !Ref IAMManagedPolicyKentrikosIAM
         - !Ref IAMManagedPolicyKentrikosS3
         - !Ref IAMManagedPolicyKentrikosVPC
+        - !Ref IAMManagedPolicyKentrikosEKSnodegroup
       RoleName: !Sub 'KENTRIKOS_${AWS::Region}_${ProductDomainName}_${EnvironmentType}_CrossAccount'
       MaxSessionDuration: 7200
 
@@ -119,6 +120,7 @@ Resources:
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_iam"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_s3"
         - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_vpc"
+        - !Sub "arn:aws:iam::${AWS::AccountId}:policy/${IAMExistingManagedPoliciesPath}KENTRIKOS_eks_nodegroup"
 
       RoleName: KopsCrossAccount
       MaxSessionDuration: 7200
@@ -606,8 +608,31 @@ Resources:
               - ec2:CreateSubnet
               - ec2:*VpcEndpoint*
             Resource: "*"
+  
+  IAMManagedPolicyKentrikosEKSnodegroup:
+    Condition: IsAutoIAMMode
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: !Sub "KENTRIKOS_eks_nodegroup_${AWS::Region}_${ProductDomainName}_${EnvironmentType}"
+      Path: !Ref IAMNewManagedPoliciesPath
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Sid: eks
+            Effect: Allow
+            Action:
+              - eks:UpdateNodegroupVersion
+              - eks:DescribeNodegroup
+              - eks:ListNodegroups
+              - eks:UntagResource
+              - eks:DeleteNodegroup
+              - eks:TagResource
+              - eks:UpdateNodegroupConfig
+              - eks:CreateNodegroup
+            Resource: "arn:aws:eks:*:*:nodegroup/*/*/*"
+    
 ##############################################################################
-
 
 Outputs:
   KopsCrossAccountRole:
